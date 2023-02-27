@@ -1,0 +1,22 @@
+{
+  "name": "betterfield-resources-dapp",
+  "version": "1.0.0",
+  "description": "Betterfield's Blockchain module to manage resources",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MDuarte11/betterfield-resources-dapp.git"
+  },
+  "author": "MDuarte11",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MDuarte11/betterfield-resources-dapp/issues"
+  },
+  "homepage": "https://github.com/MDuarte11/betterfield-resources-dapp#readme",
+  "devDependencies": {
+    "hardhat": "^2.12.7"
+  }
+}
