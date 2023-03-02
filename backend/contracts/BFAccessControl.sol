@@ -10,10 +10,7 @@ contract BFAccessControl is AccessControl {
     // Currently registered users
     mapping (address => bool) public users;
 
-    // A special function only run during the creation of the contract
-    constructor(address firstUser) public {
-        // Takes a string value and stores the value in the memory data storage area,
-        // setting `message` to that value
+    constructor(address firstUser) {
         users[firstUser] = true;
     }
 
@@ -34,7 +31,6 @@ contract BFAccessControl is AccessControl {
     }
 
     function validateRegistration(address userAddress) onlyUsers public {
-        address from = msg.sender;
         registeringUsers[userAddress] = true;
         users[userAddress] = true;
     }
