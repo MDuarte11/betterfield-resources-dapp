@@ -36,6 +36,26 @@ task("register", "Starts the registration process of an account")
    console.log(`Account queued for registration: ${queuedForRegistration}`)
 });
 
+task("unregister", "Unregisters an account")
+.addParam("smartcontractaddress", "The deployed AccessControl smart contract address")
+.addParam("accountaddress", "The account address to be unregistered")
+.setAction(async (taskArgs) => {
+   // Setup and check that address is neither as user or a registeringUser
+   const {API_URL} = process.env
+   let provider = ethers.getDefaultProvider(API_URL)
+   const abi = await getAbi(ACCESS_CONTROL_ABI_FILE_PATH)
+
+   const { PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const access_control_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
+
+   // Unregister an account
+   let unregister_transaction = await access_control_contract.unregister(taskArgs.accountaddress)
+   await unregister_transaction.wait()
+   const accountUnregistered = await access_control_contract.getUser(taskArgs.accountaddress)
+   console.log(`Account unregistered: ${!accountUnregistered}`)
+});
+
 module.exports = {
    solidity: "0.8.9",
    defaultNetwork: "polygon_mumbai",
