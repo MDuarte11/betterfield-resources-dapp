@@ -20,7 +20,7 @@ task("register", "Starts the registration process of an account")
 .addParam("smartcontractaddress", "The deployed AccessControl smart contract address")
 .addParam("accountaddress", "The account address to be registered")
 .setAction(async (taskArgs) => {
-   // Setup and check that address is neither as user or a registeringUser
+   // Setup
    const {API_URL} = process.env
    let provider = ethers.getDefaultProvider(API_URL)
    const abi = await getAbi(ACCESS_CONTROL_ABI_FILE_PATH)
@@ -40,7 +40,7 @@ task("unregister", "Unregisters an account")
 .addParam("smartcontractaddress", "The deployed AccessControl smart contract address")
 .addParam("accountaddress", "The account address to be unregistered")
 .setAction(async (taskArgs) => {
-   // Setup and check that address is neither as user or a registeringUser
+   // Setup
    const {API_URL} = process.env
    let provider = ethers.getDefaultProvider(API_URL)
    const abi = await getAbi(ACCESS_CONTROL_ABI_FILE_PATH)
@@ -54,6 +54,26 @@ task("unregister", "Unregisters an account")
    await unregister_transaction.wait()
    const accountUnregistered = await access_control_contract.getUser(taskArgs.accountaddress)
    console.log(`Account unregistered: ${!accountUnregistered}`)
+});
+
+task("validate-registration", "Validate a queued account of the registration process")
+.addParam("smartcontractaddress", "The deployed AccessControl smart contract address")
+.addParam("accountaddress", "The account address to be accepted as a new user")
+.setAction(async (taskArgs) => {
+   // Setup
+   const {API_URL} = process.env
+   let provider = ethers.getDefaultProvider(API_URL)
+   const abi = await getAbi(ACCESS_CONTROL_ABI_FILE_PATH)
+
+   const { PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const access_control_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
+
+   // Unregister an account
+   let validate_registration_transaction = await access_control_contract.validateRegistration(taskArgs.accountaddress)
+   await validate_registration_transaction.wait()
+   const accountValidated= await access_control_contract.getUser(taskArgs.accountaddress)
+   console.log(`Account validated: ${accountValidated}`)
 });
 
 module.exports = {
