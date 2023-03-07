@@ -43,6 +43,7 @@ contract BFAccessControl is AccessControl {
     // A publicly accessible function that takes an address to unregister an user by setting its active status to false,
     // but keeps the address for history purposes
     function unregister(address userAddress) onlyUsers public {
+        require(users[userAddress], 'The provided account is not a current user to be unregistered.');
         users[userAddress] = false;
     }
 
