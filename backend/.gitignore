@@ -93,3 +93,6 @@ Thumbs.db
 # Hardhat
 artifacts/
 cache/
+
+# Serverless
+.serverless
