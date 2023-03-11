@@ -3,7 +3,13 @@ async function main() {
  
     // Start deployment, returning a promise that resolves to a contract object
     const access_control = await BFAccessControl.deploy("0x92C5C193945EFD4bEd3fE46490792081E753Ef91");   
-    console.log("Contract deployed to address:", access_control.address);
+    console.log("Access Control contract deployed to address:", access_control.address);
+
+    const BFWriteResource = await ethers.getContractFactory("BFWriteResource");
+ 
+    // Start deployment, returning a promise that resolves to a contract object
+    const write_resource = await BFWriteResource.deploy(access_control.address);   
+    console.log("Write Resource contract deployed to address:", write_resource.address);
  }
  
  main()
