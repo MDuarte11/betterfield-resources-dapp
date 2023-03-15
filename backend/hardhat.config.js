@@ -35,6 +35,7 @@ task("register", "Starts the registration process of an account")
    await register_transaction.wait()
    const queuedForRegistration = await access_control_contract.getRegisteringUser(taskArgs.accountaddress)
    console.log(`Account queued for registration: ${queuedForRegistration}`)
+   return queuedForRegistration
 });
 
 task("unregister", "Unregisters an account")
