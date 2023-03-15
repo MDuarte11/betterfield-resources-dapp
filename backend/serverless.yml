@@ -3,10 +3,11 @@ frameworkVersion: '3'
 
 plugins:
  - serverless-offline
- 
+
 provider:
   name: aws
   runtime: nodejs18.x
+  timeout: 20
 
 functions:
   api:
