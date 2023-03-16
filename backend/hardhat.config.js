@@ -97,6 +97,8 @@ task("add-resource", "Add a resource")
    // Test
    let write_transaction = await write_resource_contract.addResource(taskArgs.resourceid, taskArgs.resource)
    await write_transaction.wait()
+   let returned_resource = await write_resource_contract.getResource(taskArgs.resourceid)
+   return returned_resource
 });
 
 task("get-resource", "Get a resource")
