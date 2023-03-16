@@ -56,6 +56,7 @@ task("unregister", "Unregisters an account")
    await unregister_transaction.wait()
    const accountUnregistered = await access_control_contract.getUser(taskArgs.accountaddress)
    console.log(`Account unregistered: ${!accountUnregistered}`)
+   return !accountUnregistered
 });
 
 task("validate-registration", "Validate a queued account of the registration process")
