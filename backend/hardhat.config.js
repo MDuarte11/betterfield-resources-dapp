@@ -71,11 +71,12 @@ task("validate-registration", "Validate a queued account of the registration pro
    let signer = new ethers.Wallet(PRIVATE_KEY, provider)
    const access_control_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
-   // Unregister an account
+   // Validate an account
    let validate_registration_transaction = await access_control_contract.validateRegistration(taskArgs.accountaddress)
    await validate_registration_transaction.wait()
    const accountValidated= await access_control_contract.getUser(taskArgs.accountaddress)
    console.log(`Account validated: ${accountValidated}`)
+   return accountValidated
 });
 
 task("add-resource", "Add a resource")

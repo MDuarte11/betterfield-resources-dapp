@@ -5,9 +5,9 @@ const Controller = require('./controller')
 /**
  * @swagger
  *
- *  /access-control/register:
+ *  /access-control/validate-registration:
  *    post:
- *      description: Queue an user to be registered
+ *      description: Validate the registration of a queued user
  *      tags:
  *        - access-control
  *      produces:
@@ -17,14 +17,14 @@ const Controller = require('./controller')
  *        content: 
  *          application/json: 
  *            schema: 
- *              $ref: '#/components/schemas/RegisterReqDto'
+ *              $ref: '#/components/schemas/ValidateRegistrationReqDto'
  *      responses:
  *        default:
- *          description: Registration
+ *          description: Registration validated
  *          content:
  *            application/json: 
  *              schema:
- *                $ref: '#/components/schemas/RegisterResDto'
+ *                $ref: '#/components/schemas/ValidateRegistrationResDto'
  */
 router.post(
   '/',
