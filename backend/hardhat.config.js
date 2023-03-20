@@ -157,6 +157,8 @@ task("delete-resource", "Delete a resource")
    // Test
    const delete_resource_transaction = await write_resource_contract.deleteResource(taskArgs.resourceid)
    await delete_resource_transaction.wait()
+   let returned_resource = await write_resource_contract.getResource(taskArgs.resourceid)
+   return returned_resource
 });
 
 module.exports = {
