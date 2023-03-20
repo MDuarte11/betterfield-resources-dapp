@@ -117,6 +117,7 @@ task("get-resource", "Get a resource")
    // Test
    const returned_resource = await write_resource_contract.getResource(taskArgs.resourceid)
    console.log(`Resource: ${JSON.stringify(returned_resource)}`)
+   return returned_resource
 });
 
 task("update-resource", "Update a resource")
