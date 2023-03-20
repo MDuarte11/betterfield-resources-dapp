@@ -8,7 +8,6 @@ const bodySchema = Joi.object({
 
 async function handler(req, res) {
   try {
-    console.log(req.body)
     let resource = await GetResourceUseCase.run(req.body.smartContractAddress, req.body.resourceId)
 
     if (!resource) {

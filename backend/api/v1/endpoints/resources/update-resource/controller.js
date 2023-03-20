@@ -1,5 +1,5 @@
 const { Joi } = require('../../../validator')
-const AddResourceUseCase = require('../../../../../app/usecases/resources/add-resource')
+const UpdateResourceUseCase = require('../../../../../app/usecases/resources/update-resource')
 
 const bodySchema = Joi.object({
     smartContractAddress: Joi.string().min(0).required(),
@@ -16,17 +16,17 @@ const bodySchema = Joi.object({
 
 async function handler(req, res) {
   try {
-    let resourceAdded = await AddResourceUseCase.run(req.body.smartContractAddress, req.body.resourceId, req.body.resource)
+    let resourceUpdated = await UpdateResourceUseCase.run(req.body.smartContractAddress, req.body.resourceId, req.body.resource)
 
-    if (!resourceAdded) {
+    if (!resourceUpdated) {
       res.json({
-        resourceAdded: resourceAdded
+        resourceUpdated: resourceUpdated
       }).status(400).send()
       return
     }
 
     res.json({
-        resourceAdded: resourceAdded
+      resourceUpdated: resourceUpdated
     })
   } catch (err) {
     res.status(500).send()

@@ -137,6 +137,8 @@ task("update-resource", "Update a resource")
    // Test
    const update_resource_transaction = await write_resource_contract.updateResource(taskArgs.resourceid, taskArgs.resource)
    await update_resource_transaction.wait()
+   let returned_resource = await write_resource_contract.getResource(taskArgs.resourceid)
+   return returned_resource
 });
 
 task("delete-resource", "Delete a resource")
