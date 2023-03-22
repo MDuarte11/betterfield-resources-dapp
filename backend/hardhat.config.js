@@ -120,6 +120,26 @@ task("get-resource", "Get a resource")
    return returned_resource
 });
 
+task("get-resources", "Get multiple resources")
+.addParam("smartcontractaddress", "The deployed WriteResource smart contract address")
+.addParam("lastid", "Last retrieved resource's ID")
+.addParam("pagesize", "The pagination's page size")
+.setAction(async (taskArgs) => {
+   // Setup
+   const {API_URL} = process.env
+   let provider = ethers.getDefaultProvider(API_URL)
+   const abi = await getAbi(WRITE_RESOURCE_ABI_FILE_PATH)
+
+   const { PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const write_resource_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
+
+   // Test
+   const returned_resources = await write_resource_contract.getResources(taskArgs.lastid, taskArgs.pagesize)
+   console.log(`Resources: ${JSON.stringify(returned_resources)}`)
+   return returned_resources
+});
+
 task("update-resource", "Update a resource")
 .addParam("smartcontractaddress", "The deployed WriteResource smart contract address")
 .addParam("resourceid", "Resource's ID")
