@@ -10,6 +10,7 @@ const fsPromises = fs.promises;
 const { API_URL, PRIVATE_KEY } = process.env;
 const ACCESS_CONTROL_ABI_FILE_PATH = "artifacts/contracts/BFAccessControl.sol/BFAccessControl.json";
 const WRITE_RESOURCE_ABI_FILE_PATH = "artifacts/contracts/BFWriteResource.sol/BFWriteResource.json";
+const WRITE_INSPECTION_ABI_FILE_PATH = "artifacts/contracts/BFWriteInspection.sol/BFWriteInspection.json";
 
 async function getAbi(abi_path) {
     const data = await fsPromises.readFile(abi_path, 'utf8');
@@ -179,6 +180,48 @@ task("delete-resource", "Delete a resource")
    await delete_resource_transaction.wait()
    let returned_resource = await write_resource_contract.getResource(taskArgs.resourceid)
    return returned_resource
+});
+
+task("add-inspection", "Add an inspection")
+.addParam("smartcontractaddress", "The deployed WriteInspection smart contract address")
+.addParam("resourceid", "Resource's ID")
+.addParam("inspectionid", "Inspection's ID")
+.addParam("inspection", "Inspection's JSON")
+.setAction(async (taskArgs) => {
+   // Setup
+   const {API_URL} = process.env
+   let provider = ethers.getDefaultProvider(API_URL)
+   const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
+
+   const { PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
+
+   // Test
+   let write_transaction = await write_inspection_contract.addInspection(taskArgs.resourceid, taskArgs.inspectionid, taskArgs.inspection)
+   await write_transaction.wait()
+   let returned_inspection = await write_inspection_contract.getInspection(taskArgs.resourceid, taskArgs.inspectionid)
+   return returned_inspection
+});
+
+task("get-inspection", "Get an inspection")
+.addParam("smartcontractaddress", "The deployed WriteInspection smart contract address")
+.addParam("resourceid", "Resource's ID")
+.addParam("inspectionid", "Inspection's ID")
+.setAction(async (taskArgs) => {
+   // Setup
+   const {API_URL} = process.env
+   let provider = ethers.getDefaultProvider(API_URL)
+   const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
+
+   const { PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
+
+   // Test
+   const returned_inspection = await write_inspection_contract.getInspection(taskArgs.resourceid, taskArgs.inspectionid)
+   console.log(`Inspection: ${JSON.stringify(returned_inspection)}`)
+   return returned_inspection
 });
 
 module.exports = {

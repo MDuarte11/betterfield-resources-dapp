@@ -76,4 +76,9 @@ contract BFWriteResource {
         }
         return (resultKeys, resultValues);
     }
+
+    function resourceExists(string memory resourceID) public view returns (bool) {
+        return keccak256(bytes(resources[resourceID])) != keccak256(bytes(""));
+    }
+
 }
