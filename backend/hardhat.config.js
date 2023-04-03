@@ -224,6 +224,28 @@ task("get-inspection", "Get an inspection")
    return returned_inspection
 });
 
+task("update-inspection", "Update an inspection")
+.addParam("smartcontractaddress", "The deployed WriteInspection smart contract address")
+.addParam("resourceid", "Resource's ID")
+.addParam("inspectionid", "Inspection's ID")
+.addParam("inspection", "Inspection's JSON")
+.setAction(async (taskArgs) => {
+   // Setup
+   const {API_URL} = process.env
+   let provider = ethers.getDefaultProvider(API_URL)
+   const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
+
+   const { PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
+
+   // Test
+   const update_inspection_transaction = await write_inspection_contract.updateInspection(taskArgs.resourceid, taskArgs.inspectionid, taskArgs.inspection)
+   await update_inspection_transaction.wait()
+   let returned_inspection = await write_inspection_contract.getInspection(taskArgs.resourceid, taskArgs.inspectionid)
+   return returned_inspection
+});
+
 module.exports = {
    solidity: "0.8.9",
    defaultNetwork: "polygon_mumbai",
