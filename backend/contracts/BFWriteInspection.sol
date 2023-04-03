@@ -39,6 +39,21 @@ contract BFWriteInspection {
         emit InspectionUpdated(msg.sender, resourceID, inspectionID, oldInspection, updatedInspection);
     }
 
+    function deleteInspection(string memory resourceID, string memory inspectionID) public {
+        require(access_control.isUser(msg.sender), "To add an inspection the sender must be a valid user.");
+        require(resources.resourceExists(resourceID), "The resource for the provided ID does not exist.");
+        require(keccak256(bytes(inspections[resourceID][inspectionID])) != keccak256(bytes("")), "The inspection for the provided ID does not exist.");
+        delete inspections[resourceID][inspectionID];
+        for (uint i = 0; i < inspectionIDs.length; i++) {
+            if (keccak256(bytes(inspectionIDs[i])) == keccak256(bytes(inspectionID))) {
+                inspectionIDs[i] = inspectionIDs[inspectionIDs.length - 1];
+                inspectionIDs.pop();
+                break;
+            }
+        }
+        emit InspectionDeleted(msg.sender, resourceID, inspectionID);
+    }
+
     function getInspection(string memory resourceID, string memory inspectionID) public view returns (string memory) {
         return inspections[resourceID][inspectionID];
     }
