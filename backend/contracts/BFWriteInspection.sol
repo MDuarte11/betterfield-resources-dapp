@@ -9,7 +9,7 @@ contract BFWriteInspection {
     BFAccessControl access_control;
     BFWriteResource resources;
     mapping (string => mapping(string => string)) inspections;
-    string[] inspectionIDs;
+    mapping (string => string[]) inspectionIDs;
 
     //Events
     event InspectionAdded(address indexed user, string resourceId, string inspectionId, string inspection);
@@ -26,7 +26,7 @@ contract BFWriteInspection {
         require(resources.resourceExists(resourceID), "The resource for the provided ID does not exist.");
         require(keccak256(bytes(inspections[resourceID][inspectionID])) == keccak256(bytes("")), "The inspection for the provided ID already exists.");
         inspections[resourceID][inspectionID] = newInspection;
-        inspectionIDs.push(inspectionID);
+        inspectionIDs[resourceID].push(inspectionID);
         emit InspectionAdded(msg.sender, resourceID, inspectionID, newInspection);
     }
 
@@ -44,10 +44,10 @@ contract BFWriteInspection {
         require(resources.resourceExists(resourceID), "The resource for the provided ID does not exist.");
         require(keccak256(bytes(inspections[resourceID][inspectionID])) != keccak256(bytes("")), "The inspection for the provided ID does not exist.");
         delete inspections[resourceID][inspectionID];
-        for (uint i = 0; i < inspectionIDs.length; i++) {
-            if (keccak256(bytes(inspectionIDs[i])) == keccak256(bytes(inspectionID))) {
-                inspectionIDs[i] = inspectionIDs[inspectionIDs.length - 1];
-                inspectionIDs.pop();
+        for (uint i = 0; i < inspectionIDs[resourceID].length; i++) {
+            if (keccak256(bytes(inspectionIDs[resourceID][i])) == keccak256(bytes(inspectionID))) {
+                inspectionIDs[resourceID][i] = inspectionIDs[resourceID][inspectionIDs[resourceID].length - 1];
+                inspectionIDs[resourceID].pop();
                 break;
             }
         }
@@ -56,5 +56,30 @@ contract BFWriteInspection {
 
     function getInspection(string memory resourceID, string memory inspectionID) public view returns (string memory) {
         return inspections[resourceID][inspectionID];
+    }
+
+    function getInspections(string memory resourceID, string memory lastID, uint8 pageSize) public view returns (string[] memory, string[] memory) {
+        uint256 totalIDs = inspectionIDs[resourceID].length;
+        uint256 startIdx = 0;
+        if (bytes(lastID).length > 0) {
+            for (uint256 i = 0; i < totalIDs; i++) {
+                if (keccak256(bytes(inspectionIDs[resourceID][i])) == keccak256(bytes(lastID))) {
+                    startIdx = i + 1;
+                    break;
+                }
+            }
+        }
+        uint256 endIdx = startIdx + pageSize;
+        if (endIdx > totalIDs) {
+            endIdx = totalIDs;
+        }
+        uint256 resultSize = endIdx - startIdx;
+        string[] memory resultKeys = new string[](resultSize);
+        string[] memory resultValues = new string[](resultSize);
+        for (uint256 i = startIdx; i < endIdx; i++) {
+            resultKeys[i - startIdx] = inspectionIDs[resourceID][i];
+            resultValues[i - startIdx] = inspections[resourceID][inspectionIDs[resourceID][i]];
+        }
+        return (resultKeys, resultValues);
     }
 }

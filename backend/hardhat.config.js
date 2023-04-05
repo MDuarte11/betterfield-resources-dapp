@@ -224,6 +224,27 @@ task("get-inspection", "Get an inspection")
    return returned_inspection
 });
 
+task("get-inspections", "Get multiple inspections")
+.addParam("smartcontractaddress", "The deployed WriteInspection smart contract address")
+.addParam("resourceid", "Resource's ID")
+.addParam("lastid", "Last retrieved inspection's ID")
+.addParam("pagesize", "The pagination's page size")
+.setAction(async (taskArgs) => {
+   // Setup
+   const {API_URL} = process.env
+   let provider = ethers.getDefaultProvider(API_URL)
+   const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
+
+   const { PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
+
+   // Test
+   const returned_inspections = await write_inspection_contract.getInspections(taskArgs.resourceid, taskArgs.lastid, taskArgs.pagesize)
+   console.log(`Inspections: ${JSON.stringify(returned_inspections)}`)
+   return returned_inspections
+});
+
 task("update-inspection", "Update an inspection")
 .addParam("smartcontractaddress", "The deployed WriteInspection smart contract address")
 .addParam("resourceid", "Resource's ID")
