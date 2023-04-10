@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -22,6 +23,7 @@ import {
 
 export default function DashboardAppPage() {
   const theme = useTheme();
+  const { t } = useTranslation()
 
   return (
     <>
@@ -31,7 +33,7 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          {t('pages.home.page-title')}
         </Typography>
 
         <Grid container spacing={3}>
