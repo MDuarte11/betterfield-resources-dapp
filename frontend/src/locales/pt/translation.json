@@ -1,4 +1,9 @@
 {
+    "sidebar": {
+        "home": "Início",
+        "resources": "Recursos",
+        "inspections": "Inspeções"
+    },
     "pages": {
         "home": {
             "tab-title": "Início | Betterfield ResourcesDApp",
