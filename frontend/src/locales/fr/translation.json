@@ -1,7 +1,9 @@
 {
     "pages": {
         "home": {
-            "page-title": "Bienvenue!"
+            "tab-title": "Home | Betterfield ResourcesDApp",
+            "page-title": "Bienvenue!",
+            "welcome-message": "Ce site Web a pour objectif de fournir un outil gratuit permettant à chacun de rechercher des ressources publiques stockées sur la Blockchain.\nVous pouvez vérifier si une route locale, un pont, un bâtiment public ou toute autre ressource publique est inspecté périodiquement et vérifier son état actuel.\nGardez à l'esprit que toutes les ressources ne sont pas stockées sur la Blockchain."
         }
     }
 }
