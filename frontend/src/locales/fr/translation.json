@@ -4,6 +4,11 @@
         "resources": "Ressources",
         "inspections": "Inspections"
     },
+    "languages": {
+        "portuguese": "Portugais",
+        "french": "Français",
+        "english": "Anglais"
+    },
     "pages": {
         "home": {
             "tab-title": "Home | Betterfield ResourcesDApp",

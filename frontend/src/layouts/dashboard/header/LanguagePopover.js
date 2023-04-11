@@ -2,25 +2,26 @@ import { useState } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, MenuItem, Stack, IconButton, Popover } from '@mui/material';
+import i18 from '../../../i18n'
 
 // ----------------------------------------------------------------------
 
 const LANGS = [
   {
-    value: 'en',
-    label: 'English',
-    icon: '/assets/icons/ic_flag_en.svg',
-  },
-  {
-    value: 'de',
-    label: 'German',
-    icon: '/assets/icons/ic_flag_de.svg',
+    value: 'pt',
+    label: i18.t('languages.portuguese'),
+    icon: '/assets/icons/ic_flag_pt.svg',
   },
   {
     value: 'fr',
-    label: 'French',
+    label: i18.t('languages.french'),
     icon: '/assets/icons/ic_flag_fr.svg',
   },
+  {
+    value: 'en',
+    label: i18.t('languages.english'),
+    icon: '/assets/icons/ic_flag_en.svg',
+  }
 ];
 
 // ----------------------------------------------------------------------
@@ -34,6 +35,7 @@ export default function LanguagePopover() {
 
   const handleClose = () => {
     setOpen(null);
+    // TODO: Change language to selected one
   };
 
   return (
