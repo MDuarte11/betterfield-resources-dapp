@@ -14,6 +14,15 @@
             "tab-title": "Home | Betterfield ResourcesDApp",
             "page-title": "Welcome!",
             "welcome-message": "This website has the goal to provide a free tool for everyone to search for public resources stored on the Blockchain.\nYou can check if a local road, bridge, public building or any other public resource is being inspected periodically and verify it's current state.\nKeep in mind that not all resources are stored on the Blockchain."
+        },
+        "resources": {
+            "tab-title": "Resources | Betterfield ResourcesDApp",
+            "page-title": "Resources",
+            "table": {
+                "id": "ID",
+                "name": "Name",
+                "type": "Type"
+            }
         }
     }
 }

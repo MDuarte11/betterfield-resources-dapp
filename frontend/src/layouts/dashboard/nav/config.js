@@ -14,7 +14,7 @@ const navConfig = [
   },
   {
     title: i18.t('sidebar.resources'),
-    path: '/dashboard/user',
+    path: '/dashboard/resources',
     icon: icon('ic_resources'),
   },
   {

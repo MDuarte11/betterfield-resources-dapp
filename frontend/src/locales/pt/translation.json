@@ -14,6 +14,15 @@
             "tab-title": "Início | Betterfield ResourcesDApp",
             "page-title": "Bem-vindo!",
             "welcome-message": "Este website tem o objetivo de fornecer uma ferramenta gratuita para todos poderem pesquisar recursos públicos armazenados na Blockchain.\nVocê pode verificar se uma estrada, ponte, edifício público ou qualquer outro recurso público local está sendo inspecionado periodicamente e verificar seu estado atual.\nTenha em mente que nem todos os recursos estão armazenados na Blockchain."
+        },
+        "resources": {
+            "tab-title": "Recursos | Betterfield ResourcesDApp",
+            "page-title": "Recursos",
+            "table": {
+                "id": "ID",
+                "name": "Nome",
+                "type": "Tipo"
+            }
         }
     }
 }
