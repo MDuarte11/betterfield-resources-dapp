@@ -16,11 +16,24 @@ async function handler(req, res) {
       return
     }
 
+    // Parse valid Json entries. Skip invalid entries, to prevent data loss send raw data as well.
+    let decodedResources = resources[1].reduce((reducedResources, resource) => {
+      try {
+        reducedResources.push(JSON.parse(resource))
+      } catch (err) {
+        console.log(err)
+        // Ignore error
+      }
+      return reducedResources
+    }, [])
+
     res.json({
         resourceIds: resources[0],
-        resources: resources[1]
+        resources: decodedResources,
+        resourcesRaw: resources[1]
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }
