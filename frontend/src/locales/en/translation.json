@@ -23,6 +23,14 @@
                 "name": "Name",
                 "type": "Type"
             }
+        },
+        "resource-detail": {
+            "tab-title": "Resource detail | Betterfield ResourcesDApp",
+            "page-title": "Resource detail",
+            "id-detail": "ID:",
+            "name-detail": "Name:",
+            "type-detail": "Type:",
+            "json-title": "Full data"
         }
     }
 }

@@ -103,7 +103,10 @@ export default function ResourcesPage() {
 
 
   const openResourceDetail = (row) => {
-    navigate(`/dashboard/resource-detail/${row.id}`)
+    const json = resources.resourcesRaw.find((resource) =>
+      JSON.parse(resource).id === row.id // TODO: Request API to retrieve all data for the details page
+    )
+    navigate(`/dashboard/resource-detail/${row.id}`, {state:{resource: row, json}})
   };
 
   const handleChangePage = (newPage) => {

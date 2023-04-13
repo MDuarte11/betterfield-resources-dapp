@@ -1,49 +1,97 @@
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 // @mui
-import { Grid, Button, Container, Stack, Typography } from '@mui/material';
-// components
-import Iconify from '../../components/iconify';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../../sections/@dashboard/blog';
-// mock
-import POSTS from '../../_mock/blog';
+import { useTheme } from '@mui/material/styles';
+import { Grid, Container, Stack, Typography, Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' },
-];
+export default function ResourceDetailPage() {
+    const { t } = useTranslation()
+    const { state } = useLocation()
+    const theme = useTheme()
 
-// ----------------------------------------------------------------------
-
-export default function ResourceDetailPage({id}) {
   return (
     <>
       <Helmet>
-        <title> Resource Detail | Betterfield Resources DApp </title>
+        <title> {t('pages.resource-detail.tab-title')} </title>
       </Helmet>
 
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Blog
+            {t('pages.resource-detail.page-title')}
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Post
-          </Button>
         </Stack>
 
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
+        <Stack mb={5} direction="column" alignItems="center" justifyContent="space-between">
+            <Grid container
+                alignItems="flex-start"
+                direction="row">
+                <Grid item>
+                    <Typography variant="h6">
+                        {t('pages.resource-detail.id-detail')}
+                    </Typography>
+                </Grid>
+                <Grid item marginLeft={1} marginTop={0.5}>
+                    <Typography variant="body2">
+                        {state.resource.id}
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid container
+                alignItems="flex-start"
+                direction="row">
+                <Grid item>
+                    <Typography variant="h6">
+                        {t('pages.resource-detail.name-detail')}
+                    </Typography>
+                </Grid>
+                <Grid item marginLeft={1} marginTop={0.5}>
+                    <Typography variant="body2">
+                        {state.resource.name}
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid container
+                alignItems="flex-start"
+                direction="row">
+                <Grid item>
+                    <Typography variant="h6">
+                        {t('pages.resource-detail.type-detail')}
+                    </Typography>
+                </Grid>
+                <Grid item marginLeft={1} marginTop={0.5}>
+                    <Typography variant="body2">
+                        {state.resource.type.name}
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid container
+                alignItems="flex-start"
+                direction="column"
+                marginTop={5}>
+                <Grid item>
+                    <Typography variant="h6">
+                        {t('pages.resource-detail.json-title')}
+                    </Typography>
+                </Grid>
+                <Grid item marginTop={3}>
+                    <Box sx={{
+                        width: '100%',
+                        padding: 2,
+                        borderRadius: 1,
+                        border: 1,
+                        borderColor: theme.palette.grey[500]
+                    }}>
+                        <Typography variant="body2">
+                            {state.json}
+                        </Typography>
+                    </Box>
+                </Grid>
+            </Grid>
         </Stack>
-
-        <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
-          ))}
-        </Grid>
       </Container>
     </>
   );
