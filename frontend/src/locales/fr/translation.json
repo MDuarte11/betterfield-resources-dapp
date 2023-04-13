@@ -31,6 +31,16 @@
             "name-detail": "Nom:",
             "type-detail": "Type:",
             "json-title": "Données complètes"
+        },
+        "inspections": {
+            "tab-title": "Inspections | Betterfield ResourcesDApp",
+            "page-title": "Inspections",
+            "table": {
+                "id": "ID",
+                "name": "Nom",
+                "resource": "Ressource",
+                "conformity": "Conformité"
+            }
         }
     }
 }

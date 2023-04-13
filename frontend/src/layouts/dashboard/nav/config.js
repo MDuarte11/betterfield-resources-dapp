@@ -19,7 +19,7 @@ const navConfig = [
   },
   {
     title: i18.t('sidebar.inspections'),
-    path: '/dashboard/products',
+    path: '/dashboard/inspections',
     icon: icon('ic_inspections'),
   },
 ];

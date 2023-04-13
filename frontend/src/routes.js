@@ -7,7 +7,7 @@ import BlogPage from './pages/BlogPage';
 import ResourcesPage from './pages/resources';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import ProductsPage from './pages/ProductsPage';
+import InspectionsPage from './pages/inspections';
 import DashboardAppPage from './pages/home';
 import ResourceDetailPage from './pages/resource-detail';
 
@@ -23,7 +23,7 @@ export default function Router() {
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'resources', element: <ResourcesPage /> },
         { path: 'resource-detail/:id', element: <ResourceDetailPage /> },
-        { path: 'products', element: <ProductsPage /> },
+        { path: 'inspections', element: <InspectionsPage /> },
         { path: 'blog', element: <BlogPage /> },
       ],
     },
