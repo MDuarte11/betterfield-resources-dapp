@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 // @mui
 import {
   Card,
@@ -66,6 +67,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function ResourcesPage() {
+  const navigate = useNavigate()
   const resources = useSelector(selectResources())
   const [tableResources, setTableResources] = useState([])
   const dispatch = useDispatch()
@@ -99,21 +101,10 @@ export default function ResourcesPage() {
     setOrderBy(property);
   };
 
-  /*
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  }; */
+
+  const openResourceDetail = (row) => {
+    navigate(`/dashboard/resource-detail/${row.id}`)
+  };
 
   const handleChangePage = (newPage) => {
     setPage(newPage);
@@ -181,7 +172,7 @@ export default function ResourcesPage() {
                   {tableResources && tableResources.map((row) => {
                     const { id, name, type } = row;
                     return (
-                      <TableRow hover key={id} tabIndex={-1}>
+                      <TableRow hover key={id} tabIndex={-1} onClick={() => openResourceDetail(row)}>
                         <TableCell align="left">{id}</TableCell>
                         <TableCell align="left">{name}</TableCell>
                         <TableCell align="left">{type.name}</TableCell>
