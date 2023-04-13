@@ -17,9 +17,21 @@ async function handler(req, res) {
       return
     }
 
+    // Parse valid Json entries. Skip invalid entries, to prevent data loss send raw data as well.
+    let decodedInspections = inspections[1].reduce((reducedInspections, inspection) => {
+        try {
+            reducedInspections.push(JSON.parse(inspection))
+        } catch (err) {
+            console.log(err)
+            // Ignore error
+        }
+        return reducedInspections
+    }, [])
+
     res.json({
         inspectionIds: inspections[0],
-        inspections: inspections[1]
+        inspections: decodedInspections,
+        inspectionsRaw: inspections[1]
     })
   } catch (err) {
     res.status(500).send()
