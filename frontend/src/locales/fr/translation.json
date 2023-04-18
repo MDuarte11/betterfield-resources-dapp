@@ -41,6 +41,15 @@
                 "resource": "Ressource",
                 "conformity": "Conformité"
             }
+        },
+        "inspection-detail": {
+            "tab-title": "Détail de l'inspection | Betterfield ResourcesDApp",
+            "page-title": "Détail de l'inspection",
+            "id-detail": "ID:",
+            "name-detail": "Nom:",
+            "resource-detail": "Ressource:",
+            "conformity-detail": "Conformité:",
+            "json-title": "Données complètes"
         }
     }
 }

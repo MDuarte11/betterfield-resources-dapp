@@ -10,6 +10,7 @@ import Page404 from './pages/Page404';
 import InspectionsPage from './pages/inspections';
 import DashboardAppPage from './pages/home';
 import ResourceDetailPage from './pages/resource-detail';
+import InspectionDetailPage from './pages/inspection-detail';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +25,7 @@ export default function Router() {
         { path: 'resources', element: <ResourcesPage /> },
         { path: 'resource-detail/:id', element: <ResourceDetailPage /> },
         { path: 'inspections', element: <InspectionsPage /> },
+        { path: 'inspection-detail/:id', element: <InspectionDetailPage /> },
         { path: 'blog', element: <BlogPage /> },
       ],
     },

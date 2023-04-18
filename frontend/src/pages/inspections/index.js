@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // @mui
 import {
   Card,
@@ -68,7 +68,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function InspectionsPage() {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const inspections = useSelector(selectInspections())
   const [tableInspections, setTableInspections] = useState([])
   const dispatch = useDispatch()
@@ -103,11 +103,13 @@ export default function InspectionsPage() {
   };
 
 
-  const openResourceDetail = (/* row */) => {
-    /* const json = inspections.resourcesRaw.find((resource) =>
-      JSON.parse(resource).id === row.id // TODO: Request API to retrieve all data for the details page
+  const openInspectionDetail = (row) => {
+    const json = inspections.inspectionsRaw.find((inspection) => {
+      console.log(inspection)
+      return JSON.parse(inspection).id === row.id // TODO: Request API to retrieve all data for the details page
+    }
     )
-    navigate(`/dashboard/resource-detail/${row.id}`, {state:{resource: row, json}}) */
+    navigate(`/dashboard/inspection-detail/${row.id}`, {state:{inspection: row, json}})
   };
 
   const handleChangePage = (newPage) => {
@@ -177,7 +179,7 @@ export default function InspectionsPage() {
                   {tableInspections && tableInspections.map((row) => {
                     const { id, name, resource, conformity } = row;
                     return (
-                      <TableRow hover key={id} tabIndex={-1} onClick={() => openResourceDetail(row)}>
+                      <TableRow hover key={id} tabIndex={-1} onClick={() => openInspectionDetail(row)}>
                         <TableCell align="left">{id}</TableCell>
                         <TableCell align="left">{name}</TableCell>
                         <TableCell align="left">{resource.name}</TableCell>
