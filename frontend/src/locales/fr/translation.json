@@ -49,7 +49,15 @@
             "name-detail": "Nom:",
             "resource-detail": "Ressource:",
             "conformity-detail": "Conformité:",
-            "json-title": "Données complètes"
+            "items-detail": "Éléments",
+            "json-title": "Données complètes",
+            "items-table": {
+                "id": "ID",
+                "name": "Nom",
+                "conformity": "Conformité",
+                "media": "Médias",
+                "see-button": "Voir"
+            }
         }
     }
 }
