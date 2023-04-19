@@ -40,6 +40,10 @@
                 "name": "Nom",
                 "resource": "Ressource",
                 "conformity": "Conformité"
+            },
+            "header": {
+                "title": "Ajoutez l'adresse du smart contract pour les inspections que vous souhaitez afficher",
+                "placeholder": "Adresse du smart contract"
             }
         },
         "inspection-detail": {

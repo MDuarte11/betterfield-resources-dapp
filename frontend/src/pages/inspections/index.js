@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-import { filter } from 'lodash';
+import { debounce } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import {
@@ -21,8 +21,7 @@ import {
 // components
 import Scrollbar from '../../components/scrollbar';
 // sections
-import { ResourcesListHead /* , ResourcesListToolbar */ } from '../../sections/@dashboard/resources';
-
+import { ResourcesListHead , ResourcesListToolbar } from '../../sections/@dashboard/resources';
 import { getInspections } from './actions'
 import { selectInspections } from './selectors'
 import i18 from '../../i18n'
@@ -54,16 +53,13 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function applySortFilter(array, comparator, query) {
+function applySortFilter(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  if (query) {
-    return filter(array, (_resource) => _resource.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-  }
   return stabilizedThis.map((el) => el[0]);
 }
 
@@ -74,27 +70,15 @@ export default function InspectionsPage() {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  // const [open, setOpen] = useState(null);
-
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
 
-  // const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('');
-
-  const [filterName /* , setFilterName */ ] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  /* const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  }; 
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  }; */
+  const [smartContractAddress, setSmartContractAddress] = useState('');
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -120,33 +104,35 @@ export default function InspectionsPage() {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
   };
-
-  /* 
-  const handleFilterByName = (event) => {
+ 
+  const handleSmartContractAddressChange = (event) => {
     setPage(0);
-    setFilterName(event.target.value);
-  }; */
+    setSmartContractAddress(event.target.value)
+  };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableInspections.length) : 0;
+  const isNotFound = tableInspections && tableInspections.length === 0;
 
-  const isNotFound = tableInspections && !tableInspections.length && !!filterName;
-
-  useEffect(() => {
+  // eslint-disable-next-line
+  const searchInspections = useCallback(debounce((smartContractAddress) => {
     dispatch(getInspections({
-      smartContractAddress: "0x11B2BAB03c992fEB788fd687ef304dB3c8667bC7", // TODO: Use hardcoded smart contract address for now
+      smartContractAddress,
       resourceId: "2",
       lastId: "",
       pageSize: "10",
     }));
-  }, [dispatch]);
+  }, 500), [])
 
   useEffect(() => {
-    if (inspections) {
-      setTableInspections(applySortFilter(inspections.inspections, getComparator(order, orderBy), filterName))
+    searchInspections(smartContractAddress)
+  }, [dispatch, smartContractAddress, searchInspections]);
+
+  useEffect(() => {
+    if (inspections && inspections.inspections && inspections.inspections.length > 0) {
+      setTableInspections(applySortFilter(inspections.inspections, getComparator(order, orderBy)))
+    } else {
+      setTableInspections([])
     }
-    ;
-    
-  }, [inspections, order, orderBy, filterName]);
+  }, [inspections, order, orderBy]);
 
   return (
     <>
@@ -162,8 +148,13 @@ export default function InspectionsPage() {
         </Stack>
 
         <Card>
-          { /* <ResourcesListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */ }
-
+          {
+          <ResourcesListToolbar
+            smartContractAddress={smartContractAddress}
+            onSmartContractAddressChange={handleSmartContractAddressChange}
+            title={t('pages.inspections.header.title')}
+            placeholder={t('pages.inspections.header.placeholder')}
+          /> }
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -172,7 +163,6 @@ export default function InspectionsPage() {
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={tableInspections && tableInspections.length}
-                  // numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                 />
                 <TableBody>
@@ -187,11 +177,6 @@ export default function InspectionsPage() {
                       </TableRow>
                     );
                   })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
                 </TableBody>
 
                 {isNotFound && (
@@ -204,13 +189,11 @@ export default function InspectionsPage() {
                           }}
                         >
                           <Typography variant="h6" paragraph>
-                            Not found
+                            {t('pages.inspections.table.no-results-title')}
                           </Typography>
 
                           <Typography variant="body2">
-                            No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
-                            <br /> Try checking for typos or using complete words.
+                            {t('pages.inspections.table.no-results-message')}
                           </Typography>
                         </Paper>
                       </TableCell>

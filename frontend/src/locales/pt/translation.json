@@ -39,7 +39,13 @@
                 "id": "ID",
                 "name": "Nome",
                 "resource": "Recurso",
-                "conformity": "Conformidade"
+                "conformity": "Conformidade",
+                "no-results-title": "Sem resultados",
+                "no-results-message": "Por favor tente preencher novamente os campos acima."
+            },
+            "header": {
+                "title": "Adicione o endereço do smart contract relativo às inspeções que pretende visualizar",
+                "placeholder": "Endereço do smart contract"
             }
         },
         "inspection-detail": {
