@@ -1,27 +1,22 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
-// component
-import Iconify from '../../../components/iconify';
+import { Toolbar, Typography, OutlinedInput, Grid } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled(Toolbar)(({ theme }) => ({
-  height: 96,
   display: 'flex',
   justifyContent: 'space-between',
   padding: theme.spacing(0, 1, 0, 3),
 }));
 
 const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
-  width: 240,
   transition: theme.transitions.create(['box-shadow', 'width'], {
     easing: theme.transitions.easing.easeInOut,
     duration: theme.transitions.duration.shorter,
   }),
   '&.Mui-focused': {
-    width: 320,
     boxShadow: theme.customShadows.z8,
   },
   '& fieldset': {
@@ -33,51 +28,26 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 ResourcesListToolbar.propTypes = {
-  numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func,
+  smartContractAddress: PropTypes.string,
+  onSmartContractAddressChange: PropTypes.func,
+  title: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
-export default function ResourcesListToolbar({ numSelected, filterName, onFilterName }) {
+export default function ResourcesListToolbar({smartContractAddress, onSmartContractAddressChange, title, placeholder }) {
   return (
-    <StyledRoot
-      sx={{
-        ...(numSelected > 0 && {
-          color: 'primary.main',
-          bgcolor: 'primary.lighter',
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography component="div" variant="subtitle1">
-          {numSelected} selected
+    <StyledRoot>
+      <Grid container direction={'column'}>
+        <Typography component="div" variant="subtitle1" marginTop={2}>
+          {title}
         </Typography>
-      ) : (
         <StyledSearch
-          value={filterName}
-          onChange={onFilterName}
-          placeholder="Search user..."
-          startAdornment={
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-            </InputAdornment>
-          }
+          sx={{marginTop: 2, marginBottom: 2}}
+          value={smartContractAddress}
+          onChange={onSmartContractAddressChange}
+          placeholder={placeholder}
         />
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <Iconify icon="eva:trash-2-fill" />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Iconify icon="ic:round-filter-list" />
-          </IconButton>
-        </Tooltip>
-      )}
+      </Grid>
     </StyledRoot>
   );
 }
