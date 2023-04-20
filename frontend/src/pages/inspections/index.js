@@ -119,18 +119,18 @@ export default function InspectionsPage() {
   const isNotFound = tableInspections && tableInspections.length === 0;
 
   // eslint-disable-next-line
-  const searchInspections = useCallback(debounce((smartContractAddress, resourceId) => {
+  const searchInspections = useCallback(debounce((smartContractAddress, resourceId, rowsPerPage) => {
     dispatch(getInspections({
       smartContractAddress,
       resourceId,
       lastId: "",
-      pageSize: "10",
+      pageSize: `${rowsPerPage}`,
     }));
   }, 500), [])
 
   useEffect(() => {
-    searchInspections(smartContractAddress, resourceId)
-  }, [dispatch, smartContractAddress, searchInspections, resourceId]);
+    searchInspections(smartContractAddress, resourceId, rowsPerPage)
+  }, [dispatch, smartContractAddress, searchInspections, resourceId, rowsPerPage]);
 
   useEffect(() => {
     if (inspections && inspections.inspections && inspections.inspections.length > 0) {
