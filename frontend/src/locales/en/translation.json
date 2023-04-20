@@ -21,7 +21,13 @@
             "table": {
                 "id": "ID",
                 "name": "Name",
-                "type": "Type"
+                "type": "Type",
+                "no-results-title": "No results",
+                "no-results-message": "Please try filling in the fields above again"
+            },
+            "header": {
+                "title": "Add the smart contract address for the resources you want to view",
+                "placeholder": "Smart contract address"
             }
         },
         "resource-detail": {
@@ -39,7 +45,9 @@
                 "id": "ID",
                 "name": "Name",
                 "resource": "Resource",
-                "conformity": "Conformity"
+                "conformity": "Conformity",
+                "no-results-title": "No results",
+                "no-results-message": "Please try filling in the fields above again"
             },
             "header": {
                 "title": "Add the smart contract address for the inspections you want to view",

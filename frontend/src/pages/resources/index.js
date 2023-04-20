@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-import { filter } from 'lodash';
+import { debounce } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import {
@@ -21,7 +21,7 @@ import {
 // components
 import Scrollbar from '../../components/scrollbar';
 // sections
-import { ResourcesListHead /* , ResourcesListToolbar */ } from '../../sections/@dashboard/resources';
+import { ResourcesListHead, ResourcesListToolbar } from '../../sections/@dashboard/resources';
 
 import { getResources } from './actions'
 import { selectResources } from './selectors'
@@ -53,16 +53,13 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function applySortFilter(array, comparator, query) {
+function applySortFilter(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  if (query) {
-    return filter(array, (_resource) => _resource.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-  }
   return stabilizedThis.map((el) => el[0]);
 }
 
@@ -73,27 +70,15 @@ export default function ResourcesPage() {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  // const [open, setOpen] = useState(null);
-
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
 
-  // const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('');
-
-  const [filterName /* , setFilterName */ ] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  /* const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  }; 
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  }; */
+  const [smartContractAddress, setSmartContractAddress] = useState('');
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -118,31 +103,38 @@ export default function ResourcesPage() {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  /* 
-  const handleFilterByName = (event) => {
+  const handleSmartContractAddressChange = (event) => {
     setPage(0);
-    setFilterName(event.target.value);
-  }; */
+    setSmartContractAddress(event.target.value)
+  };
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableResources.length) : 0;
 
-  const isNotFound = tableResources && !tableResources.length && !!filterName;
+  const isNotFound = tableResources && !tableResources.length;
 
-  useEffect(() => {
+  // eslint-disable-next-line
+  const searchResources = useCallback(debounce((smartContractAddress) => {
     dispatch(getResources({
-      smartContractAddress: "0xB64B944d31Fe7B6Fd9464a4EaB25a409BC9d1b22", // TODO: Use hardcoded smart contract address for now
+      smartContractAddress,
       lastId: "",
       pageSize: "10",
     }));
+    }, 500), [])
+  
+    useEffect(() => {
+      searchResources(smartContractAddress)
+    }, [dispatch, smartContractAddress, searchResources]);
+
+  useEffect(() => {
+
   }, [dispatch]);
 
   useEffect(() => {
-    if (resources) {
-      setTableResources(applySortFilter(resources.resources, getComparator(order, orderBy), filterName))
+    if (resources && resources.resources && resources.resources.length > 0) {
+      setTableResources(applySortFilter(resources.resources, getComparator(order, orderBy)))
     }
-    ;
     
-  }, [resources, order, orderBy, filterName]);
+  }, [resources, order, orderBy]);
 
   return (
     <>
@@ -158,8 +150,12 @@ export default function ResourcesPage() {
         </Stack>
 
         <Card>
-          { /* <ResourcesListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */ }
-
+        <ResourcesListToolbar
+            smartContractAddress={smartContractAddress}
+            onSmartContractAddressChange={handleSmartContractAddressChange}
+            title={t('pages.resources.header.title')}
+            placeholder={t('pages.resources.header.placeholder')}
+          />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -199,13 +195,11 @@ export default function ResourcesPage() {
                           }}
                         >
                           <Typography variant="h6" paragraph>
-                            Not found
+                            {t('pages.resources.table.no-results-title')}
                           </Typography>
 
                           <Typography variant="body2">
-                            No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
-                            <br /> Try checking for typos or using complete words.
+                            {t('pages.resources.table.no-results-message')}
                           </Typography>
                         </Paper>
                       </TableCell>

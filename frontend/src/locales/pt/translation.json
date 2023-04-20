@@ -21,7 +21,13 @@
             "table": {
                 "id": "ID",
                 "name": "Nome",
-                "type": "Tipo"
+                "type": "Tipo",
+                "no-results-title": "Sem resultados",
+                "no-results-message": "Por favor tente preencher novamente os campos acima."
+            },
+            "header": {
+                "title": "Adicione o endereço do smart contract relativo aos recursos que pretende visualizar",
+                "placeholder": "Endereço do smart contract"
             }
         },
         "resource-detail": {

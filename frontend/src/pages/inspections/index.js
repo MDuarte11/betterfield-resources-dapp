@@ -148,13 +148,12 @@ export default function InspectionsPage() {
         </Stack>
 
         <Card>
-          {
           <ResourcesListToolbar
             smartContractAddress={smartContractAddress}
             onSmartContractAddressChange={handleSmartContractAddressChange}
             title={t('pages.inspections.header.title')}
             placeholder={t('pages.inspections.header.placeholder')}
-          /> }
+          />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>

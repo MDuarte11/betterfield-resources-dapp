@@ -21,7 +21,13 @@
             "table": {
                 "id": "ID",
                 "name": "Nom",
-                "type": "Type"
+                "type": "Type",
+                "no-results-title": "Aucun résultat",
+                "no-results-message": "Veuillez réessayer de remplir les champs ci-dessus."
+            },
+            "header": {
+                "title": "Ajoutez l'adresse du smart contract pour les ressources que vous souhaitez afficher",
+                "placeholder": "Adresse du smart contract"
             }
         },
         "resource-detail": {
@@ -39,7 +45,9 @@
                 "id": "ID",
                 "name": "Nom",
                 "resource": "Ressource",
-                "conformity": "Conformité"
+                "conformity": "Conformité",
+                "no-results-title": "Aucun résultat",
+                "no-results-message": "Veuillez réessayer de remplir les champs ci-dessus."
             },
             "header": {
                 "title": "Ajoutez l'adresse du smart contract pour les inspections que vous souhaitez afficher",
