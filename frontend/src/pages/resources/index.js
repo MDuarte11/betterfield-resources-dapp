@@ -113,21 +113,17 @@ export default function ResourcesPage() {
   const isNotFound = tableResources && !tableResources.length;
 
   // eslint-disable-next-line
-  const searchResources = useCallback(debounce((smartContractAddress) => {
+  const searchResources = useCallback(debounce((smartContractAddress, rowsPerPage) => {
     dispatch(getResources({
       smartContractAddress,
       lastId: "",
-      pageSize: "10",
+      pageSize: `${rowsPerPage}`,
     }));
     }, 500), [])
   
     useEffect(() => {
-      searchResources(smartContractAddress)
-    }, [dispatch, smartContractAddress, searchResources]);
-
-  useEffect(() => {
-
-  }, [dispatch]);
+      searchResources(smartContractAddress, rowsPerPage)
+    }, [dispatch, smartContractAddress, searchResources, rowsPerPage]);
 
   useEffect(() => {
     if (resources && resources.resources && resources.resources.length > 0) {
