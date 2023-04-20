@@ -16,7 +16,7 @@ const visuallyHidden = {
   clip: 'rect(0 0 0 0)',
 };
 
-ResourcesListHead.propTypes = {
+TablesListHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']),
   orderBy: PropTypes.string,
   // rowCount: PropTypes.number,
@@ -26,7 +26,7 @@ ResourcesListHead.propTypes = {
   // onSelectAllClick: PropTypes.func,
 };
 
-export default function ResourcesListHead({
+export default function TablesListHead({
   order,
   orderBy,
   headLabel,

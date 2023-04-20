@@ -21,7 +21,7 @@ import {
 // components
 import Scrollbar from '../../components/scrollbar';
 // sections
-import { ResourcesListHead , ResourcesListToolbar } from '../../sections/@dashboard/resources';
+import { TablesListHead , TablesListToolbar } from '../../sections/@dashboard/tables';
 import { getInspections } from './actions'
 import { selectInspections } from './selectors'
 import i18 from '../../i18n'
@@ -80,12 +80,13 @@ export default function InspectionsPage() {
 
   const [smartContractAddress, setSmartContractAddress] = useState('');
 
+  const [resourceId, setResourceId] = useState('');
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
 
   const openInspectionDetail = (row) => {
     const json = inspections.inspectionsRaw.find((inspection) => {
@@ -110,21 +111,26 @@ export default function InspectionsPage() {
     setSmartContractAddress(event.target.value)
   };
 
+  const handleResourceIdChange = (event) => {
+    setPage(0);
+    setResourceId(event.target.value)
+  };
+
   const isNotFound = tableInspections && tableInspections.length === 0;
 
   // eslint-disable-next-line
-  const searchInspections = useCallback(debounce((smartContractAddress) => {
+  const searchInspections = useCallback(debounce((smartContractAddress, resourceId) => {
     dispatch(getInspections({
       smartContractAddress,
-      resourceId: "2",
+      resourceId,
       lastId: "",
       pageSize: "10",
     }));
   }, 500), [])
 
   useEffect(() => {
-    searchInspections(smartContractAddress)
-  }, [dispatch, smartContractAddress, searchInspections]);
+    searchInspections(smartContractAddress, resourceId)
+  }, [dispatch, smartContractAddress, searchInspections, resourceId]);
 
   useEffect(() => {
     if (inspections && inspections.inspections && inspections.inspections.length > 0) {
@@ -148,16 +154,19 @@ export default function InspectionsPage() {
         </Stack>
 
         <Card>
-          <ResourcesListToolbar
+          <TablesListToolbar
             smartContractAddress={smartContractAddress}
             onSmartContractAddressChange={handleSmartContractAddressChange}
+            resourceId={resourceId}
+            onResourceIdChange={handleResourceIdChange}
             title={t('pages.inspections.header.title')}
-            placeholder={t('pages.inspections.header.placeholder')}
+            smartContractAddressPlaceholder={t('pages.inspections.header.smartcontract-placeholder')}
+            resourceIdPlaceholder={t('pages.inspections.header.resourceid-placeholder')}
           />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <ResourcesListHead
+                <TablesListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}

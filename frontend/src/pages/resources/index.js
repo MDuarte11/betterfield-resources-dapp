@@ -21,7 +21,7 @@ import {
 // components
 import Scrollbar from '../../components/scrollbar';
 // sections
-import { ResourcesListHead, ResourcesListToolbar } from '../../sections/@dashboard/resources';
+import { TablesListHead, TablesListToolbar } from '../../sections/@dashboard/tables';
 
 import { getResources } from './actions'
 import { selectResources } from './selectors'
@@ -150,16 +150,16 @@ export default function ResourcesPage() {
         </Stack>
 
         <Card>
-        <ResourcesListToolbar
+        <TablesListToolbar
             smartContractAddress={smartContractAddress}
             onSmartContractAddressChange={handleSmartContractAddressChange}
             title={t('pages.resources.header.title')}
-            placeholder={t('pages.resources.header.placeholder')}
+            smartContractAddressPlaceholder={t('pages.resources.header.placeholder')}
           />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <ResourcesListHead
+                <TablesListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}

@@ -24,7 +24,7 @@ import { filter } from 'lodash';
 // components
 import Scrollbar from '../../components/scrollbar';
 // sections
-import { ResourcesListHead /* , ResourcesListToolbar */ } from '../../sections/@dashboard/resources';
+import { TablesListHead } from '../../sections/@dashboard/tables';
 import i18 from '../../i18n'
 
 // ----------------------------------------------------------------------
@@ -208,7 +208,7 @@ export default function InspectionDetailPage() {
                         <Scrollbar>
                             <TableContainer sx={{ minWidth: 800 }}>
                             <Table>
-                                <ResourcesListHead
+                                <TablesListHead
                                 order={order}
                                 orderBy={orderBy}
                                 headLabel={TABLE_HEAD}

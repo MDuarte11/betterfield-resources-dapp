@@ -27,14 +27,25 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-ResourcesListToolbar.propTypes = {
+TablesListToolbar.propTypes = {
   smartContractAddress: PropTypes.string,
   onSmartContractAddressChange: PropTypes.func,
+  resourceId: PropTypes.string,
+  onResourceIdChange: PropTypes.func,
   title: PropTypes.string,
-  placeholder: PropTypes.string,
+  smartContractAddressPlaceholder: PropTypes.string,
+  resourceIdPlaceholder: PropTypes.string
 };
 
-export default function ResourcesListToolbar({smartContractAddress, onSmartContractAddressChange, title, placeholder }) {
+export default function TablesListToolbar({
+  smartContractAddress,
+  onSmartContractAddressChange,
+  resourceId,
+  onResourceIdChange,
+  title,
+  smartContractAddressPlaceholder,
+  resourceIdPlaceholder
+}) {
   return (
     <StyledRoot>
       <Grid container direction={'column'}>
@@ -45,8 +56,16 @@ export default function ResourcesListToolbar({smartContractAddress, onSmartContr
           sx={{marginTop: 2, marginBottom: 2}}
           value={smartContractAddress}
           onChange={onSmartContractAddressChange}
-          placeholder={placeholder}
+          placeholder={smartContractAddressPlaceholder}
         />
+        {onResourceIdChange && (
+          <StyledSearch
+            sx={{marginBottom: 2}}
+            value={resourceId}
+            onChange={onResourceIdChange}
+            placeholder={resourceIdPlaceholder}
+          />
+        )}
       </Grid>
     </StyledRoot>
   );

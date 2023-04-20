@@ -50,8 +50,9 @@
                 "no-results-message": "Please try filling in the fields above again"
             },
             "header": {
-                "title": "Add the smart contract address for the inspections you want to view",
-                "placeholder": "Smart contract address"
+                "title": "Add the smart contract address for the inspections you want to view, as well as the ID of the resource to which the inspections belong",
+                "smartcontract-placeholder": "Smart contract address",
+                "resourceid-placeholder": "ID do recurso"
             }
         },
         "inspection-detail": {

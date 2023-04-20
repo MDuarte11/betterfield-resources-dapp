@@ -50,8 +50,9 @@
                 "no-results-message": "Veuillez réessayer de remplir les champs ci-dessus."
             },
             "header": {
-                "title": "Ajoutez l'adresse du smart contract pour les inspections que vous souhaitez afficher",
-                "placeholder": "Adresse du smart contract"
+                "title": "Ajoutez l'adresse du smart contract pour les inspections que vous souhaitez afficher, ainsi que l'ID de la ressource à laquelle appartiennent les inspections",
+                "smartcontract-placeholder": "Adresse du smart contract",
+                "resourceid-placeholder": "ID do recurso"
             }
         },
         "inspection-detail": {
