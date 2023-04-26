@@ -27,11 +27,17 @@ async function handler(req, res) {
       return reducedResources
     }, [])
 
+    let lastResourceId = ""
+    if(resources[0].length > 0) {
+      lastResourceId = resources[0][resources[0].length - 1]
+    }
+
     res.json({
         resourceIds: resources[0],
         resources: decodedResources,
         resourcesRaw: resources[1],
-        resourcesCount: resources[2].toNumber()
+        resourcesCount: resources[2].toNumber(),
+        lastResourceId
     })
   } catch (err) {
     console.log(err)
