@@ -52,7 +52,7 @@ contract BFWriteResource {
         return resources[resourceID];
     }
 
-    function getResources(string memory lastID, uint8 pageSize) public view returns (string[] memory, string[] memory) {
+    function getResources(string memory lastID, uint8 pageSize) public view returns (string[] memory, string[] memory, uint256) {
         uint256 totalIDs = resourceIDs.length;
         uint256 startIdx = 0;
         if (bytes(lastID).length > 0) {
@@ -74,7 +74,7 @@ contract BFWriteResource {
             resultKeys[i - startIdx] = resourceIDs[i];
             resultValues[i - startIdx] = resources[resourceIDs[i]];
         }
-        return (resultKeys, resultValues);
+        return (resultKeys, resultValues, totalIDs);
     }
 
     function resourceExists(string memory resourceID) public view returns (bool) {

@@ -30,7 +30,8 @@ async function handler(req, res) {
     res.json({
         resourceIds: resources[0],
         resources: decodedResources,
-        resourcesRaw: resources[1]
+        resourcesRaw: resources[1],
+        resourcesCount: resources[2].toNumber()
     })
   } catch (err) {
     console.log(err)
