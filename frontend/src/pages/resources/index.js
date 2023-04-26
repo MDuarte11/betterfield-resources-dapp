@@ -74,6 +74,8 @@ export default function ResourcesPage() {
 
   const [resourcesCount, setResourcesCount] = useState(0);
 
+  const [lastResourceIdsMap, setLastResourceIdsMap] = useState({0: ''});
+
   const [order, setOrder] = useState('asc');
 
   const [orderBy, setOrderBy] = useState('');
@@ -96,12 +98,13 @@ export default function ResourcesPage() {
     navigate(`/dashboard/resource-detail/${row.id}`, {state:{resource: row, json}})
   };
 
-  const handleChangePage = (newPage) => {
-    setPage(newPage);
+  const handleChangePage = (_, page) => {
+    setPage(page);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
+    setLastResourceIdsMap({0: ''})
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
@@ -110,22 +113,20 @@ export default function ResourcesPage() {
     setSmartContractAddress(event.target.value)
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableResources.length) : 0;
-
   const isNotFound = tableResources && !tableResources.length;
 
   // eslint-disable-next-line
-  const searchResources = useCallback(debounce((smartContractAddress, rowsPerPage) => {
+  const searchResources = useCallback(debounce((smartContractAddress, rowsPerPage, lastResourceIdsMap, page) => {
     dispatch(getResources({
       smartContractAddress,
-      lastId: "",
+      lastId: lastResourceIdsMap[page],
       pageSize: `${rowsPerPage}`,
     }));
     }, 500), [])
   
     useEffect(() => {
-      searchResources(smartContractAddress, rowsPerPage)
-    }, [dispatch, smartContractAddress, searchResources, rowsPerPage]);
+      searchResources(smartContractAddress, rowsPerPage, lastResourceIdsMap, page)
+    }, [dispatch, smartContractAddress, searchResources, rowsPerPage, page, lastResourceIdsMap]);
 
   useEffect(() => {
     if (resources && resources.resources && resources.resources.length > 0) {
@@ -134,9 +135,13 @@ export default function ResourcesPage() {
       if(resources.resourcesCount) {
         setResourcesCount(resources.resourcesCount)
       }
+
+      const newMap = lastResourceIdsMap
+      newMap[page + 1] = resources.lastResourceId 
+      setLastResourceIdsMap(newMap)
     }
     
-  }, [resources, order, orderBy]);
+  }, [resources, order, orderBy, lastResourceIdsMap, page]);
 
   return (
     <>
@@ -180,11 +185,6 @@ export default function ResourcesPage() {
                       </TableRow>
                     );
                   })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
                 </TableBody>
 
                 {isNotFound && (
