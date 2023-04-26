@@ -72,6 +72,8 @@ export default function InspectionsPage() {
 
   const [page, setPage] = useState(0);
 
+  const [inspectionsCount, setInspectionsCount] = useState(0);
+
   const [order, setOrder] = useState('asc');
 
   const [orderBy, setOrderBy] = useState('');
@@ -135,6 +137,9 @@ export default function InspectionsPage() {
   useEffect(() => {
     if (inspections && inspections.inspections && inspections.inspections.length > 0) {
       setTableInspections(applySortFilter(inspections.inspections, getComparator(order, orderBy)))
+      if(inspections.inspectionsCount) {
+        setInspectionsCount(inspections.inspectionsCount)
+      }
     } else {
       setTableInspections([])
     }
@@ -215,7 +220,7 @@ export default function InspectionsPage() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={tableInspections && tableInspections.length}
+            count={inspectionsCount}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
