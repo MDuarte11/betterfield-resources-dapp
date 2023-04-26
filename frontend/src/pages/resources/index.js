@@ -72,6 +72,8 @@ export default function ResourcesPage() {
 
   const [page, setPage] = useState(0);
 
+  const [resourcesCount, setResourcesCount] = useState(0);
+
   const [order, setOrder] = useState('asc');
 
   const [orderBy, setOrderBy] = useState('');
@@ -128,6 +130,10 @@ export default function ResourcesPage() {
   useEffect(() => {
     if (resources && resources.resources && resources.resources.length > 0) {
       setTableResources(applySortFilter(resources.resources, getComparator(order, orderBy)))
+
+      if(resources.resourcesCount) {
+        setResourcesCount(resources.resourcesCount)
+      }
     }
     
   }, [resources, order, orderBy]);
@@ -209,7 +215,7 @@ export default function ResourcesPage() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={tableResources && tableResources.length}
+            count={resourcesCount}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
