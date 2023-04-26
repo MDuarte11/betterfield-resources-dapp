@@ -58,7 +58,7 @@ contract BFWriteInspection {
         return inspections[resourceID][inspectionID];
     }
 
-    function getInspections(string memory resourceID, string memory lastID, uint8 pageSize) public view returns (string[] memory, string[] memory) {
+    function getInspections(string memory resourceID, string memory lastID, uint8 pageSize) public view returns (string[] memory, string[] memory, uint256) {
         uint256 totalIDs = inspectionIDs[resourceID].length;
         uint256 startIdx = 0;
         if (bytes(lastID).length > 0) {
@@ -80,6 +80,6 @@ contract BFWriteInspection {
             resultKeys[i - startIdx] = inspectionIDs[resourceID][i];
             resultValues[i - startIdx] = inspections[resourceID][inspectionIDs[resourceID][i]];
         }
-        return (resultKeys, resultValues);
+        return (resultKeys, resultValues, totalIDs);
     }
 }

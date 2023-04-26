@@ -31,7 +31,8 @@ async function handler(req, res) {
     res.json({
         inspectionIds: inspections[0],
         inspections: decodedInspections,
-        inspectionsRaw: inspections[1]
+        inspectionsRaw: inspections[1],
+        inspectionsCount: inspections[2].toNumber()
     })
   } catch (err) {
     res.status(500).send()
