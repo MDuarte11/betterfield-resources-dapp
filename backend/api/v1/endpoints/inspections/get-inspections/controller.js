@@ -28,11 +28,17 @@ async function handler(req, res) {
         return reducedInspections
     }, [])
 
+    let lastInspectionId = ""
+    if(inspections[0].length > 0) {
+        lastInspectionId = inspections[0][inspections[0].length - 1]
+    }
+
     res.json({
         inspectionIds: inspections[0],
         inspections: decodedInspections,
         inspectionsRaw: inspections[1],
-        inspectionsCount: inspections[2].toNumber()
+        inspectionsCount: inspections[2].toNumber(),
+        lastInspectionId
     })
   } catch (err) {
     res.status(500).send()
