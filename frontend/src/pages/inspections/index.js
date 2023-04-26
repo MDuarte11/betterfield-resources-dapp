@@ -74,6 +74,8 @@ export default function InspectionsPage() {
 
   const [inspectionsCount, setInspectionsCount] = useState(0);
 
+  const [lastInspectionIdsMap, setLastInspectionIdsMap] = useState({0: ''});
+
   const [order, setOrder] = useState('asc');
 
   const [orderBy, setOrderBy] = useState('');
@@ -99,12 +101,13 @@ export default function InspectionsPage() {
     navigate(`/dashboard/inspection-detail/${row.id}`, {state:{inspection: row, json}})
   };
 
-  const handleChangePage = (newPage) => {
-    setPage(newPage);
+  const handleChangePage = (_, page) => {
+    setPage(page);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
+    setLastInspectionIdsMap({0: ''})
     setRowsPerPage(parseInt(event.target.value, 10));
   };
  
@@ -121,18 +124,18 @@ export default function InspectionsPage() {
   const isNotFound = tableInspections && tableInspections.length === 0;
 
   // eslint-disable-next-line
-  const searchInspections = useCallback(debounce((smartContractAddress, resourceId, rowsPerPage) => {
+  const searchInspections = useCallback(debounce((smartContractAddress, resourceId, rowsPerPage, lastResourceIdsMap, page) => {
     dispatch(getInspections({
       smartContractAddress,
       resourceId,
-      lastId: "",
+      lastId: lastResourceIdsMap[page],
       pageSize: `${rowsPerPage}`,
     }));
   }, 500), [])
 
   useEffect(() => {
-    searchInspections(smartContractAddress, resourceId, rowsPerPage)
-  }, [dispatch, smartContractAddress, searchInspections, resourceId, rowsPerPage]);
+    searchInspections(smartContractAddress, resourceId, rowsPerPage, lastInspectionIdsMap, page)
+  }, [dispatch, smartContractAddress, searchInspections, resourceId, rowsPerPage, lastInspectionIdsMap, page]);
 
   useEffect(() => {
     if (inspections && inspections.inspections && inspections.inspections.length > 0) {
@@ -140,10 +143,14 @@ export default function InspectionsPage() {
       if(inspections.inspectionsCount) {
         setInspectionsCount(inspections.inspectionsCount)
       }
+
+      const newMap = lastInspectionIdsMap
+      newMap[page + 1] = inspections.lastInspectionId 
+      setLastInspectionIdsMap(newMap)
     } else {
       setTableInspections([])
     }
-  }, [inspections, order, orderBy]);
+  }, [inspections, order, orderBy, lastInspectionIdsMap, page]);
 
   return (
     <>
