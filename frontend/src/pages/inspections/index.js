@@ -82,9 +82,9 @@ export default function InspectionsPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [smartContractAddress, setSmartContractAddress] = useState('');
+  const [smartContractAddress, setSmartContractAddress] = useState(localStorage.getItem("smartContractAddress"));
 
-  const [resourceId, setResourceId] = useState('');
+  const [resourceId, setResourceId] = useState(localStorage.getItem("resourceId"));
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -114,11 +114,13 @@ export default function InspectionsPage() {
   const handleSmartContractAddressChange = (event) => {
     setPage(0);
     setSmartContractAddress(event.target.value)
+    localStorage.setItem("smartContractAddress", event.target.value)
   };
 
   const handleResourceIdChange = (event) => {
     setPage(0);
     setResourceId(event.target.value)
+    localStorage.setItem("resourceId", event.target.value)
   };
 
   const isNotFound = tableInspections && tableInspections.length === 0;
@@ -193,7 +195,7 @@ export default function InspectionsPage() {
                         <TableCell align="left">{id}</TableCell>
                         <TableCell align="left">{name}</TableCell>
                         <TableCell align="left">{resource.name}</TableCell>
-                        <TableCell align="left">{conformity}</TableCell>
+                        <TableCell align="left">{t(conformity)}</TableCell>
                       </TableRow>
                     );
                   })}
