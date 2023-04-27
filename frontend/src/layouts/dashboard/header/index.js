@@ -7,7 +7,6 @@ import { bgBlur } from '../../../utils/cssStyles';
 // components
 import Iconify from '../../../components/iconify';
 //
-import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 
 // ----------------------------------------------------------------------
@@ -66,7 +65,6 @@ export default function Header({ onOpenNav }) {
           }}
         >
           <LanguagePopover />
-          <AccountPopover />
         </Stack>
       </StyledToolbar>
     </StyledRoot>
