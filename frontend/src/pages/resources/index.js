@@ -82,7 +82,7 @@ export default function ResourcesPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [smartContractAddress, setSmartContractAddress] = useState('');
+  const [smartContractAddress, setSmartContractAddress] = useState(localStorage.getItem("resourcesSmartContractAddress"));
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -111,6 +111,7 @@ export default function ResourcesPage() {
   const handleSmartContractAddressChange = (event) => {
     setPage(0);
     setSmartContractAddress(event.target.value)
+    localStorage.setItem("resourcesSmartContractAddress", event.target.value)
   };
 
   const isNotFound = tableResources && !tableResources.length;

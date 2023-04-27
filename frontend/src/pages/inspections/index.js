@@ -82,7 +82,7 @@ export default function InspectionsPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [smartContractAddress, setSmartContractAddress] = useState(localStorage.getItem("smartContractAddress"));
+  const [smartContractAddress, setSmartContractAddress] = useState(localStorage.getItem("inspectionsSmartContractAddress"));
 
   const [resourceId, setResourceId] = useState(localStorage.getItem("resourceId"));
 
@@ -114,7 +114,7 @@ export default function InspectionsPage() {
   const handleSmartContractAddressChange = (event) => {
     setPage(0);
     setSmartContractAddress(event.target.value)
-    localStorage.setItem("smartContractAddress", event.target.value)
+    localStorage.setItem("inspectionsSmartContractAddress", event.target.value)
   };
 
   const handleResourceIdChange = (event) => {
