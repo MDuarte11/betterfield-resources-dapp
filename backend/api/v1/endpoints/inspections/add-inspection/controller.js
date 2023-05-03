@@ -1,5 +1,6 @@
 const { Joi } = require('../../../validator')
 const AddInspectionUseCase = require('../../../../../app/usecases/inspections/add-inspection')
+const UploadMediaUseCase = require('../../../../../app/usecases/uploads/upload-multiple-media')
 
 const bodySchema = Joi.object({
     smartContractAddress: Joi.string().min(0).required(),
@@ -29,7 +30,16 @@ const bodySchema = Joi.object({
 
 async function handler(req, res) {
   try {
-    let inspectionAdded = await AddInspectionUseCase.run(req.body.smartContractAddress, req.body.resourceId, req.body.inspectionId, req.body.inspection)
+    let inspection = req.body.inspection
+    inspection.items = await Promise.all(inspection.items.map(async (item) => {
+      if (item.mediaUrls) {
+        let cids = await UploadMediaUseCase.run(inspection.name, item.name, item.mediaUrls)
+        item.mediaCIDs = cids
+      }
+      return item
+    }))
+
+    let inspectionAdded = await AddInspectionUseCase.run(req.body.smartContractAddress, req.body.resourceId, req.body.inspectionId, inspection)
 
     if (!inspectionAdded) {
       res.json({
@@ -42,6 +52,7 @@ async function handler(req, res) {
         inspectionAdded: inspectionAdded
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }
