@@ -22,7 +22,8 @@ const bodySchema = Joi.object({
             name: Joi.string().min(0).required(),
             conformity: Joi.string().min(0).required(),
             description: Joi.string().optional(),
-            mediaUrls: Joi.array().items(Joi.string()).optional()
+            mediaUrls: Joi.array().items(Joi.string()).optional(),
+            mediaCID: Joi.string().optional()
         }))
     })
 })

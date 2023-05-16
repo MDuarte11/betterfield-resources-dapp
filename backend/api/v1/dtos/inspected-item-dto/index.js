@@ -18,5 +18,7 @@
  *           type: array
  *             items:
  *              type: string
+ *         mediaCID:
+ *           type: string
  *           
  */

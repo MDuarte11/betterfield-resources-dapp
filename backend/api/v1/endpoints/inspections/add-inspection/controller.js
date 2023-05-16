@@ -33,8 +33,8 @@ async function handler(req, res) {
     let inspection = req.body.inspection
     inspection.items = await Promise.all(inspection.items.map(async (item) => {
       if (item.mediaUrls) {
-        let cids = await UploadMediaUseCase.run(inspection.name, item.name, item.mediaUrls)
-        item.mediaCIDs = cids
+        let cid = await UploadMediaUseCase.run(inspection.name, item.name, item.mediaUrls)
+        item.mediaCID = cid
       }
       return item
     }))
@@ -52,7 +52,6 @@ async function handler(req, res) {
         inspectionAdded: inspectionAdded
     })
   } catch (err) {
-    console.log(err)
     res.status(500).send()
   }
 }
