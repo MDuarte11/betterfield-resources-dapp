@@ -21,11 +21,15 @@ import {
     Button
 } from '@mui/material';
 import { filter } from 'lodash';
+import { Web3Storage } from 'web3.storage'
 // components
 import Scrollbar from '../../components/scrollbar';
 // sections
 import { TablesListHead } from '../../sections/@dashboard/tables';
 import i18 from '../../i18n'
+
+const web3Token = process.env.REACT_APP_WEB3_STORAGE_TOKEN
+const web3StorageClient = new Web3Storage({ token: web3Token });
 
 // ----------------------------------------------------------------------
 
@@ -89,16 +93,65 @@ export default function InspectionDetailPage() {
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
+
+    const readFile = (file) =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          
+          reader.onloadend = () => {
+            resolve(reader.result);
+          };
+          
+          reader.onerror = () => {
+            reject(reader.error);
+          };
+          
+          reader.readAsArrayBuffer(file);
+        });
     
-    /*
-    const openInspectionDetail = (row) => {
-        const json = inspections.inspectionsRaw.find((inspection) => {
-          console.log(inspection)
-          return JSON.parse(inspection).id === row.id // TODO: Request API to retrieve all data for the details page
+    const openMediaGallery = async (row) => {
+        if(row.mediaCID) {
+            const response = await web3StorageClient.get(row.mediaCID)
+            const files = await response.files()
+            const blobs = await Promise.all(files.map(async (file) => {
+                try {
+                    const buffer = await readFile(file);
+                    
+                    // Define magic number byte sequences and their corresponding MIME types
+                    const magicNumbers = [
+                    { sequence: [0xFF, 0xD8, 0xFF], mimeType: 'image/jpeg' },
+                    { sequence: [0x89, 0x50, 0x4E, 0x47], mimeType: 'image/png' },
+                    { sequence: [0x47, 0x49, 0x46, 0x38, 0x37, 0x61], mimeType: 'image/gif' },
+                    { sequence: [0x47, 0x49, 0x46, 0x38, 0x39, 0x61], mimeType: 'image/gif' },
+                    { sequence: [0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x6D, 0x70, 0x34, 0x32], mimeType: 'video/mp4' },
+                    { sequence: [0x1A, 0x45, 0xDF, 0xA3], mimeType: 'video/webm' },
+                    { sequence: [0x49, 0x44, 0x33], mimeType: 'audio/mpeg' },
+                    { sequence: [0x52, 0x49, 0x46, 0x46], mimeType: 'audio/wav' }
+                    // Add more magic number and MIME type pairs as needed
+                    ];
+                    
+                    // Convert the buffer to Uint8Array
+                    const uint8Array = new Uint8Array(buffer);
+                    
+                    // Check the buffer against the magic number byte sequences
+                    const mimeType = magicNumbers.find((magicNumber) =>
+                    magicNumber.sequence.every((byte, index) => byte === uint8Array[index])
+                    )?.mimeType;
+                    
+                    if (mimeType) {
+                        return new Blob([buffer], { type: mimeType })
+                    }
+                    
+                    return new Blob([buffer], { type: "image/jpeg" })
+                } catch (error) {
+                    return file
+                }
+            }))
+            
+            // TODO: Open media gallery
         }
-        )
-        navigate(`/dashboard/inspection-detail/${row.id}`, {state:{inspection: row, json}})
-    }; */
+        
+    };
     
     const handleChangePage = (newPage) => {
         setPage(newPage);
@@ -218,7 +271,7 @@ export default function InspectionDetailPage() {
                                 />
                                 <TableBody>
                                 {tableInspectionItems && tableInspectionItems.map((row) => {
-                                    const { id, name, conformity, mediaURLs } = row;
+                                    const { id, name, conformity, mediaCID } = row;
                                     return (
                                     <TableRow hover key={id} tabIndex={-1}>
                                         <TableCell align="left">{id}</TableCell>
@@ -226,7 +279,7 @@ export default function InspectionDetailPage() {
                                         <TableCell align="left">{conformity}</TableCell>
                                         <TableCell align="left" sx={{paddingLeft: 0 }} >
                                             {
-                                                <Button disabled={!mediaURLs} /* onClick={() => openInspectionDetail(row)} */ >
+                                                <Button disabled={!mediaCID}  onClick={() => openMediaGallery(row)} >
                                                     {t('pages.inspection-detail.items-table.see-button')}
                                                 </Button>
                                             }
