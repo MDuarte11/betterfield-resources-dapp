@@ -72,5 +72,10 @@
                 "see-button": "See"
             }
         }
+    },
+    "components": {
+        "media-gallery": {
+            "title": "Gallery"
+        }
     }
 }
