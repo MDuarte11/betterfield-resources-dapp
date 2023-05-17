@@ -23,6 +23,7 @@ import {
 import { filter } from 'lodash';
 import { Web3Storage } from 'web3.storage'
 // components
+import MediaGallery from '../../components/media-gallery';
 import Scrollbar from '../../components/scrollbar';
 // sections
 import { TablesListHead } from '../../sections/@dashboard/tables';
@@ -77,6 +78,10 @@ export default function InspectionDetailPage() {
 
     const inspectionItems = state.inspection.items
     const [tableInspectionItems, setTableInspectionItems] = useState([])
+
+    const [mediaFiles, setMediaFiles] = useState([])
+
+    const [openMedia, setOpenMedia] = useState(false)
 
     const [page, setPage] = useState(0);
 
@@ -149,6 +154,8 @@ export default function InspectionDetailPage() {
             }))
             
             // TODO: Open media gallery
+            setMediaFiles(blobs)
+            setOpenMedia(true)
         }
         
     };
@@ -162,6 +169,10 @@ export default function InspectionDetailPage() {
         setRowsPerPage(parseInt(event.target.value, 10));
     };
 
+    const handleCloseMedia = () => {
+        setOpenMedia(false)
+    };
+
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableInspectionItems.length) : 0;
 
     const isNotFound = tableInspectionItems && !tableInspectionItems.length && !!filterName;  
@@ -173,6 +184,7 @@ export default function InspectionDetailPage() {
     }, [inspectionItems, order, orderBy, filterName]);
   return (
     <>
+      <MediaGallery files={mediaFiles} open={openMedia} onClose={handleCloseMedia}/>
       <Helmet>
         <title> {t('pages.inspection-detail.tab-title')} </title>
       </Helmet>
