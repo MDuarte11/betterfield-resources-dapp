@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+//
+import { useTranslation } from 'react-i18next';
 // @mui
 import { Box, Drawer } from '@mui/material';
 // hooks
@@ -10,8 +12,6 @@ import Logo from '../../../components/logo';
 import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 import SvgColor from '../../../components/svg-color';
-//
-import i18next from '../../../i18n'
 
 // ----------------------------------------------------------------------
 
@@ -29,19 +29,21 @@ Nav.propTypes = {
 };
 
 export default function Nav({ openNav, onCloseNav }) {
+  const { t } = useTranslation()
+
   const navConfig = [
     {
-      title: i18next.t('sidebar.home'),
+      title: t('sidebar.home'),
       path: '/dashboard/app',
       icon: icon('ic_home'),
     },
     {
-      title: i18next.t('sidebar.resources'),
+      title: t('sidebar.resources'),
       path: '/dashboard/resources',
       icon: icon('ic_resources'),
     },
     {
-      title: i18next.t('sidebar.inspections'),
+      title: t('sidebar.inspections'),
       path: '/dashboard/inspections',
       icon: icon('ic_inspections'),
     },
