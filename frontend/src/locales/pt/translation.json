@@ -19,7 +19,7 @@
             "tab-title": "Recursos | Betterfield ResourcesDApp",
             "page-title": "Recursos",
             "table": {
-                "id": "ID",
+                "id": "ID do recurso",
                 "name": "Nome",
                 "type": "Tipo",
                 "no-results-title": "Sem resultados",
@@ -33,7 +33,7 @@
         "resource-detail": {
             "tab-title": "Detalhe do recurso | Betterfield ResourcesDApp",
             "page-title": "Detalhe do recurso",
-            "id-detail": "ID:",
+            "id-detail": "ID do recurso:",
             "name-detail": "Nome:",
             "type-detail": "Tipo:",
             "json-title": "Dados completos"
@@ -42,7 +42,7 @@
             "tab-title": "Inspeções | Betterfield ResourcesDApp",
             "page-title": "Inspeções",
             "table": {
-                "id": "ID",
+                "id": "ID da inspeção",
                 "name": "Nome",
                 "resource": "Recurso",
                 "conformity": "Conformidade",
@@ -58,14 +58,14 @@
         "inspection-detail": {
             "tab-title": "Detalhe da inspeção | Betterfield ResourcesDApp",
             "page-title": "Detalhe da inspeção",
-            "id-detail": "ID:",
+            "id-detail": "ID da inspeção:",
             "name-detail": "Nome:",
             "resource-detail": "Recurso:",
             "conformity-detail": "Conformidade:",
             "items-detail": "Itens",
             "json-title": "Dados completos",
             "items-table": {
-                "id": "ID",
+                "id": "ID do item",
                 "name": "Nome",
                 "conformity": "Conformidade",
                 "media": "Media",

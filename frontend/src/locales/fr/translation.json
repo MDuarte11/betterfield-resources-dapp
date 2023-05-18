@@ -19,7 +19,7 @@
             "tab-title": "Ressources | Betterfield ResourcesDApp",
             "page-title": "Ressources",
             "table": {
-                "id": "ID",
+                "id": "ID de ressource",
                 "name": "Nom",
                 "type": "Type",
                 "no-results-title": "Aucun résultat",
@@ -31,9 +31,9 @@
             }
         },
         "resource-detail": {
-            "tab-title": "Détail de la ressource | Betterfield ResourcesDApp",
-            "page-title": "Détail de la ressource",
-            "id-detail": "ID:",
+            "tab-title": "Détail de ressource | Betterfield ResourcesDApp",
+            "page-title": "Détail de ressource",
+            "id-detail": "ID de ressource:",
             "name-detail": "Nom:",
             "type-detail": "Type:",
             "json-title": "Données complètes"
@@ -42,7 +42,7 @@
             "tab-title": "Inspections | Betterfield ResourcesDApp",
             "page-title": "Inspections",
             "table": {
-                "id": "ID",
+                "id": "ID d'inspection",
                 "name": "Nom",
                 "resource": "Ressource",
                 "conformity": "Conformité",
@@ -58,14 +58,14 @@
         "inspection-detail": {
             "tab-title": "Détail de l'inspection | Betterfield ResourcesDApp",
             "page-title": "Détail de l'inspection",
-            "id-detail": "ID:",
+            "id-detail": "ID d'inspection:",
             "name-detail": "Nom:",
             "resource-detail": "Ressource:",
             "conformity-detail": "Conformité:",
             "items-detail": "Éléments",
             "json-title": "Données complètes",
             "items-table": {
-                "id": "ID",
+                "id": "ID de l'élément",
                 "name": "Nom",
                 "conformity": "Conformité",
                 "media": "Médias",
