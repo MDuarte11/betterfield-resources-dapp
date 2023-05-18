@@ -118,6 +118,8 @@ export default function InspectionDetailPage() {
     
     const openMediaGallery = async (row) => {
         if(row.mediaCID) {
+            setMediaFiles([])
+            setOpenMedia(true)
             const response = await web3StorageClient.get(row.mediaCID)
             const files = await response.files()
             const blobs = await Promise.all(files.map(async (file) => {
@@ -155,9 +157,7 @@ export default function InspectionDetailPage() {
                 }
             }))
             
-            // TODO: Open media gallery
             setMediaFiles(blobs)
-            setOpenMedia(true)
         }
         
     };
