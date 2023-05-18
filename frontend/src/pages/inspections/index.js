@@ -24,16 +24,6 @@ import Scrollbar from '../../components/scrollbar';
 import { TablesListHead , TablesListToolbar } from '../../sections/@dashboard/tables';
 import { getInspections } from './actions'
 import { selectInspections } from './selectors'
-import i18 from '../../i18n'
-
-// ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-  { id: 'id', label: i18.t('pages.inspections.table.id'), alignRight: false },
-  { id: 'name', label: i18.t('pages.inspections.table.name'), alignRight: false },
-  { id: 'resource', label: i18.t('pages.inspections.table.resource'), alignRight: false },
-  { id: 'conformity', label: i18.t('pages.inspections.table.conformity'), alignRight: false },
-];
 
 // ----------------------------------------------------------------------
 
@@ -85,6 +75,17 @@ export default function InspectionsPage() {
   const [smartContractAddress, setSmartContractAddress] = useState(localStorage.getItem("inspectionsSmartContractAddress"));
 
   const [resourceId, setResourceId] = useState(localStorage.getItem("resourceId"));
+
+  // ----------------------------------------------------------------------
+
+  const TABLE_HEAD = [
+    { id: 'id', label: t('pages.inspections.table.id'), alignRight: false },
+    { id: 'name', label: t('pages.inspections.table.name'), alignRight: false },
+    { id: 'resource', label: t('pages.inspections.table.resource'), alignRight: false },
+    { id: 'conformity', label: t('pages.inspections.table.conformity'), alignRight: false },
+  ];
+
+  // ----------------------------------------------------------------------
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

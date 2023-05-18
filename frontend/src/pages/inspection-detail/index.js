@@ -27,19 +27,10 @@ import MediaGallery from '../../components/media-gallery';
 import Scrollbar from '../../components/scrollbar';
 // sections
 import { TablesListHead } from '../../sections/@dashboard/tables';
-import i18 from '../../i18n'
 
 const web3Token = process.env.REACT_APP_WEB3_STORAGE_TOKEN
 const web3StorageClient = new Web3Storage({ token: web3Token });
 
-// ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-    { id: 'id', label: i18.t('pages.inspection-detail.items-table.id'), alignRight: false },
-    { id: 'name', label: i18.t('pages.inspection-detail.items-table.name'), alignRight: false },
-    { id: 'conformity', label: i18.t('pages.inspection-detail.items-table.conformity'), alignRight: false },
-    { id: 'media', label: i18.t('pages.inspection-detail.items-table.media'), alignRight: false },
-  ];
 // ----------------------------------------------------------------------
 
 function descendingComparator(a, b, orderBy) {
@@ -92,6 +83,17 @@ export default function InspectionDetailPage() {
     const [filterName /* , setFilterName */ ] = useState('');
 
     const [rowsPerPage, setRowsPerPage] = useState(5);
+
+    // ----------------------------------------------------------------------
+
+    const TABLE_HEAD = [
+        { id: 'id', label: t('pages.inspection-detail.items-table.id'), alignRight: false },
+        { id: 'name', label: t('pages.inspection-detail.items-table.name'), alignRight: false },
+        { id: 'conformity', label: t('pages.inspection-detail.items-table.conformity'), alignRight: false },
+        { id: 'media', label: t('pages.inspection-detail.items-table.media'), alignRight: false },
+      ];
+
+    // ----------------------------------------------------------------------
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';

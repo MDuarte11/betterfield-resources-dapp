@@ -25,15 +25,6 @@ import { TablesListHead, TablesListToolbar } from '../../sections/@dashboard/tab
 
 import { getResources } from './actions'
 import { selectResources } from './selectors'
-import i18 from '../../i18n'
-
-// ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-  { id: 'id', label: i18.t('pages.resources.table.id'), alignRight: false },
-  { id: 'name', label: i18.t('pages.resources.table.name'), alignRight: false },
-  { id: 'type', label: i18.t('pages.resources.table.type'), alignRight: false },
-];
 
 // ----------------------------------------------------------------------
 
@@ -83,6 +74,16 @@ export default function ResourcesPage() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [smartContractAddress, setSmartContractAddress] = useState(localStorage.getItem("resourcesSmartContractAddress"));
+
+  // ----------------------------------------------------------------------
+
+  const TABLE_HEAD = [
+    { id: 'id', label: t('pages.resources.table.id'), alignRight: false },
+    { id: 'name', label: t('pages.resources.table.name'), alignRight: false },
+    { id: 'type', label: t('pages.resources.table.type'), alignRight: false },
+  ];
+
+  // ----------------------------------------------------------------------
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
