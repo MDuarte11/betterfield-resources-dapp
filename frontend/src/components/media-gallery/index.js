@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Slider from "react-slick";
@@ -75,14 +75,14 @@ export default function MediaGallery({files, open, onClose}) {
                     if (file.type.includes("image")) {
                         // Show images
                         return (
-                            <div>
+                            <div key="image">
                                 <img src={src} alt="img"/>
                             </div>
                         )
                     }
                     // Show videos or sounds
                     return (
-                        <div>
+                        <div key="player">
                             <ReactPlayer url={src} controls width={window.innerWidth / 2.7} />
                         </div>
                     )
