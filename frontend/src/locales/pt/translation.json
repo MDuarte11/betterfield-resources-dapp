@@ -23,7 +23,9 @@
                 "name": "Nome",
                 "type": "Tipo",
                 "no-results-title": "Sem resultados",
-                "no-results-message": "Por favor tente preencher novamente os campos acima."
+                "no-results-message": "Por favor tente preencher novamente os campos acima.",
+                "loading-title": "A carregar",
+                "loading-message": "Por favor aguarde um momento pelos resultados."
             },
             "header": {
                 "title": "Adicione o endereço do smart contract relativo aos recursos que pretende visualizar",
@@ -47,7 +49,9 @@
                 "resource": "Recurso",
                 "conformity": "Conformidade",
                 "no-results-title": "Sem resultados",
-                "no-results-message": "Por favor tente preencher novamente os campos acima."
+                "no-results-message": "Por favor tente preencher novamente os campos acima.",
+                "loading-title": "A carregar",
+                "loading-message": "Por favor aguarde um momento pelos resultados."
             },
             "header": {
                 "title": "Adicione o endereço do smart contract relativo às inspeções que pretende visualizar, assim como o ID do recurso às quais as inspeções pertencem",

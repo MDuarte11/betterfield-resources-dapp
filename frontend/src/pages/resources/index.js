@@ -75,6 +75,8 @@ export default function ResourcesPage() {
 
   const [smartContractAddress, setSmartContractAddress] = useState(localStorage.getItem("resourcesSmartContractAddress"));
 
+  const [loading, setLoading] = useState(true);
+
   // ----------------------------------------------------------------------
 
   const TABLE_HEAD = [
@@ -110,15 +112,17 @@ export default function ResourcesPage() {
   };
 
   const handleSmartContractAddressChange = (event) => {
+    setLoading(true)
     setPage(0);
     setSmartContractAddress(event.target.value)
     localStorage.setItem("resourcesSmartContractAddress", event.target.value)
   };
 
-  const isNotFound = tableResources && !tableResources.length;
+  const isNotFound = !loading && tableResources && !tableResources.length;
 
   // eslint-disable-next-line
   const searchResources = useCallback(debounce((smartContractAddress, rowsPerPage, lastResourceIdsMap, page) => {
+    setLoading(true)
     dispatch(getResources({
       smartContractAddress,
       lastId: lastResourceIdsMap[page],
@@ -142,7 +146,7 @@ export default function ResourcesPage() {
       newMap[page + 1] = resources.lastResourceId 
       setLastResourceIdsMap(newMap)
     }
-    
+    setLoading(false)
   }, [resources, order, orderBy, lastResourceIdsMap, page]);
 
   return (
@@ -173,21 +177,42 @@ export default function ResourcesPage() {
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={tableResources && tableResources.length}
-                  // numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                 />
-                <TableBody>
-                  {tableResources && tableResources.map((row) => {
-                    const { id, name, type } = row;
-                    return (
-                      <TableRow hover key={id} tabIndex={-1} onClick={() => openResourceDetail(row)}>
-                        <TableCell align="left">{id}</TableCell>
-                        <TableCell align="left">{name}</TableCell>
-                        <TableCell align="left">{type.name}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
+                {loading ? (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <Paper
+                          sx={{
+                            textAlign: 'center',
+                          }}
+                        >
+                          <Typography variant="h6" paragraph>
+                          {t('pages.resources.table.loading-title')}
+                          </Typography>
+
+                          <Typography variant="body2">
+                          {t('pages.resources.table.loading-message')}
+                          </Typography>
+                        </Paper>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                ) : (
+                  <TableBody>
+                    {tableResources && tableResources.map((row) => {
+                      const { id, name, type } = row;
+                      return (
+                        <TableRow hover key={id} tabIndex={-1} onClick={() => openResourceDetail(row)}>
+                          <TableCell align="left">{id}</TableCell>
+                          <TableCell align="left">{name}</TableCell>
+                          <TableCell align="left">{type.name}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                )}
 
                 {isNotFound && (
                   <TableBody>

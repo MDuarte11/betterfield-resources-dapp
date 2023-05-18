@@ -23,7 +23,9 @@
                 "name": "Name",
                 "type": "Type",
                 "no-results-title": "No results",
-                "no-results-message": "Please try filling in the fields above again"
+                "no-results-message": "Please try filling in the fields above again",
+                "loading-title": "Loading",
+                "loading-message": "Please wait a moment for the results."
             },
             "header": {
                 "title": "Add the smart contract address for the resources you want to view",
@@ -47,7 +49,9 @@
                 "resource": "Resource",
                 "conformity": "Conformity",
                 "no-results-title": "No results",
-                "no-results-message": "Please try filling in the fields above again"
+                "no-results-message": "Please try filling in the fields above again",
+                "loading-title": "Loading",
+                "loading-message": "Please wait a moment for the results."
             },
             "header": {
                 "title": "Add the smart contract address for the inspections you want to view, as well as the ID of the resource to which the inspections belong",
