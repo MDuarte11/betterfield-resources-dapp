@@ -76,6 +76,8 @@ export default function InspectionsPage() {
 
   const [resourceId, setResourceId] = useState(localStorage.getItem("resourceId"));
 
+  const [loading, setLoading] = useState(true);
+
   // ----------------------------------------------------------------------
 
   const TABLE_HEAD = [
@@ -113,21 +115,24 @@ export default function InspectionsPage() {
   };
  
   const handleSmartContractAddressChange = (event) => {
+    setLoading(true)
     setPage(0);
     setSmartContractAddress(event.target.value)
     localStorage.setItem("inspectionsSmartContractAddress", event.target.value)
   };
 
   const handleResourceIdChange = (event) => {
+    setLoading(true)
     setPage(0);
     setResourceId(event.target.value)
     localStorage.setItem("resourceId", event.target.value)
   };
 
-  const isNotFound = tableInspections && tableInspections.length === 0;
+  const isNotFound = !loading && tableInspections && tableInspections.length === 0;
 
   // eslint-disable-next-line
   const searchInspections = useCallback(debounce((smartContractAddress, resourceId, rowsPerPage, lastResourceIdsMap, page) => {
+    setLoading(true)
     dispatch(getInspections({
       smartContractAddress,
       resourceId,
@@ -153,6 +158,7 @@ export default function InspectionsPage() {
     } else {
       setTableInspections([])
     }
+    setLoading(false)
   }, [inspections, order, orderBy, lastInspectionIdsMap, page]);
 
   return (
@@ -188,19 +194,41 @@ export default function InspectionsPage() {
                   rowCount={tableInspections && tableInspections.length}
                   onRequestSort={handleRequestSort}
                 />
-                <TableBody>
-                  {tableInspections && tableInspections.map((row) => {
-                    const { id, name, resource, conformity } = row;
-                    return (
-                      <TableRow hover key={id} tabIndex={-1} onClick={() => openInspectionDetail(row)}>
-                        <TableCell align="left">{id}</TableCell>
-                        <TableCell align="left">{name}</TableCell>
-                        <TableCell align="left">{resource.name}</TableCell>
-                        <TableCell align="left">{t(conformity)}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
+                {loading ? (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <Paper
+                          sx={{
+                            textAlign: 'center',
+                          }}
+                        >
+                          <Typography variant="h6" paragraph>
+                          {t('pages.resources.table.loading-title')}
+                          </Typography>
+
+                          <Typography variant="body2">
+                          {t('pages.resources.table.loading-message')}
+                          </Typography>
+                        </Paper>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                ) : (
+                  <TableBody>
+                    {tableInspections && tableInspections.map((row) => {
+                      const { id, name, resource, conformity } = row;
+                      return (
+                        <TableRow hover key={id} tabIndex={-1} onClick={() => openInspectionDetail(row)}>
+                          <TableCell align="left">{id}</TableCell>
+                          <TableCell align="left">{name}</TableCell>
+                          <TableCell align="left">{resource.name}</TableCell>
+                          <TableCell align="left">{t(conformity)}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                )}
 
                 {isNotFound && (
                   <TableBody>
