@@ -18,12 +18,12 @@ async function getAbi() {
 
 async function main() {
     // Setup and check that address is neither as user or a registeringUser
-    const {API_URL} = process.env
-    let provider = ethers.getDefaultProvider(API_URL)
+    const {RPC_API_URL} = process.env
+    let provider = ethers.getDefaultProvider(RPC_API_URL)
     const abi = await getAbi()
 
-    const { PRIVATE_KEY } = process.env
-    let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+    const { WALLET_PRIVATE_KEY } = process.env
+    let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
     const access_control_contract = new ethers.Contract(DEPLOYED_SMART_CONTRACT_ADDRESS, abi, signer)
 
     const isUser = await access_control_contract.getUser("0x3E572A3E08A1d5f622518b88dbE39473cF753c51")

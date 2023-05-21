@@ -7,7 +7,7 @@ const util = require('util');
 var ethers = require('ethers')
 const fsPromises = fs.promises;
 
-const { API_URL, PRIVATE_KEY } = process.env;
+const { RPC_API_URL, WALLET_PRIVATE_KEY } = process.env;
 const ACCESS_CONTROL_ABI_FILE_PATH = "artifacts/contracts/BFAccessControl.sol/BFAccessControl.json";
 const WRITE_RESOURCE_ABI_FILE_PATH = "artifacts/contracts/BFWriteResource.sol/BFWriteResource.json";
 const WRITE_INSPECTION_ABI_FILE_PATH = "artifacts/contracts/BFWriteInspection.sol/BFWriteInspection.json";
@@ -23,12 +23,12 @@ task("register", "Starts the registration process of an account")
 .addParam("accountaddress", "The account address to be registered")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(ACCESS_CONTROL_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const access_control_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Queue address to be registered
@@ -44,12 +44,12 @@ task("unregister", "Unregisters an account")
 .addParam("accountaddress", "The account address to be unregistered")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(ACCESS_CONTROL_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const access_control_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Unregister an account
@@ -65,12 +65,12 @@ task("validate-registration", "Validate a queued account of the registration pro
 .addParam("accountaddress", "The account address to be accepted as a new user")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(ACCESS_CONTROL_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const access_control_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Validate an account
@@ -87,12 +87,12 @@ task("add-resource", "Add a resource")
 .addParam("resource", "Resource's JSON")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_RESOURCE_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_resource_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -107,12 +107,12 @@ task("get-resource", "Get a resource")
 .addParam("resourceid", "Resource's ID")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_RESOURCE_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_resource_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -127,12 +127,12 @@ task("get-resources", "Get multiple resources")
 .addParam("pagesize", "The pagination's page size")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_RESOURCE_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_resource_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -147,12 +147,12 @@ task("update-resource", "Update a resource")
 .addParam("resource", "Resource's JSON")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_RESOURCE_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_resource_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -167,12 +167,12 @@ task("delete-resource", "Delete a resource")
 .addParam("resourceid", "Resource's ID")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_RESOURCE_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_resource_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -189,12 +189,12 @@ task("add-inspection", "Add an inspection")
 .addParam("inspection", "Inspection's JSON")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -210,12 +210,12 @@ task("get-inspection", "Get an inspection")
 .addParam("inspectionid", "Inspection's ID")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -231,12 +231,12 @@ task("get-inspections", "Get multiple inspections")
 .addParam("pagesize", "The pagination's page size")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -252,12 +252,12 @@ task("update-inspection", "Update an inspection")
 .addParam("inspection", "Inspection's JSON")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -273,12 +273,12 @@ task("delete-inspection", "Delete an inspection")
 .addParam("inspectionid", "Inspection's ID")
 .setAction(async (taskArgs) => {
    // Setup
-   const {API_URL} = process.env
-   let provider = ethers.getDefaultProvider(API_URL)
+   const {RPC_API_URL} = process.env
+   let provider = ethers.getDefaultProvider(RPC_API_URL)
    const abi = await getAbi(WRITE_INSPECTION_ABI_FILE_PATH)
 
-   const { PRIVATE_KEY } = process.env
-   let signer = new ethers.Wallet(PRIVATE_KEY, provider)
+   const { WALLET_PRIVATE_KEY } = process.env
+   let signer = new ethers.Wallet(WALLET_PRIVATE_KEY, provider)
    const write_inspection_contract = new ethers.Contract(taskArgs.smartcontractaddress, abi, signer)
 
    // Test
@@ -294,8 +294,8 @@ module.exports = {
    networks: {
       hardhat: {},
       polygon_mumbai: {
-         url: API_URL,
-         accounts: [`0x${PRIVATE_KEY}`]
+         url: RPC_API_URL,
+         accounts: [`0x${WALLET_PRIVATE_KEY}`]
       }
    },
 }
