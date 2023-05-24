@@ -1,16 +1,48 @@
-service: betterfield-resources-dapp-backend
+service: api-resources-dapp-betterfield
 frameworkVersion: '3'
 
 plugins:
- - serverless-offline
+ - serverless-api-cloudfront
+ - serverless-offline  # should be last in list
 
 provider:
   name: aws
   runtime: nodejs18.x
   timeout: 20
+  region: eu-west-3
+  endpointType: REGIONAL
+  memorySize: 256
+  versionFunctions: false
+  apiGateway:
+    minimumCompressionSize: 1400
+  stackTags:
+    SERVICE: ${sls:stage}-${self:service}
+  environment:
+    DEBUG: 'api.resources-dapp.betterfield:*'
+    DEBUG_DEPTH: 5
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    CLOUDFRONT_DOMAIN: ${env:CLOUDFRONT_DOMAIN}
+    ACM_CERTIFICATE_ARN: ${env:ACM_CERTIFICATE_ARN}
+    S3_BUCKET_NAME: ${self:custom.s3Bucket}
+    STAGE: ${sls:stage}
 
 functions:
   api:
     handler: index.handler
     events:
       - httpApi: '*'
+
+custom:
+  s3Bucket: ${self:service}-${sls:stage}-bucket
+  apiCloudFront:
+    domain: ${env:CLOUDFRONT_DOMAIN}
+    certificate: ${env:ACM_CERTIFICATE_ARN}
+    compress: false
+    cookies: none
+    headers:
+      - Authorization
+    querystring:
+      - q
+      - includeDisabled
+    priceClass: PriceClass_100
+    minimumProtocolVersion: TLSv1

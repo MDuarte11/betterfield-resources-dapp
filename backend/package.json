@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:test": "export $(cat .env | xargs) && sls deploy -s test",
+    "deploy:qa": "export $(cat .env | xargs) && sls deploy -s qa",
+    "deploy:prod": "export $(cat .env | xargs) && sls deploy -s prod",
     "offline": "sls offline --stage test --host 0.0.0.0 --httpPort 4000"
   },
   "repository": {
@@ -20,7 +23,8 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.2",
     "ethers": "^5.7.2",
-    "hardhat": "^2.12.7"
+    "hardhat": "^2.12.7",
+    "serverless-api-cloudfront": "^0.9.5"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.1",
