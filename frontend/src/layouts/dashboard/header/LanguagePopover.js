@@ -26,7 +26,7 @@ export default function LanguagePopover() {
   // ----------------------------------------------------------------------
 
   const [open, setOpen] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState(LANGS.find(element => element.value === i18next.language));
+  const [selectedLanguage, setSelectedLanguage] = useState(LANGS.find(element => element.value === i18next.language) ?? LANGS[0]);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
