@@ -7,11 +7,10 @@ const router = require('express').Router()
 
 router.use(bodyParser.json())
 
-// allow cors requests from any origin and with credentials
+// allow cors requests from any origin
 router.use(cors({
   origin: '*',
-  allowedHeaders: ['Content-Type', 'X-Amz-Date', 'Authorization', 'X-Api-Key', 'X-Amz-Security-Token', 'X-Amz-User-Agent'],
-  credentials: true
+  allowedHeaders: ['Content-Type', 'X-Amz-Date', 'X-Api-Key', 'X-Amz-Security-Token', 'X-Amz-User-Agent']
 }))
 
 // api routes
