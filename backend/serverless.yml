@@ -16,7 +16,7 @@ provider:
   apiGateway:
     minimumCompressionSize: 1400
   stackTags:
-    SERVICE: ${sls:stage}-${self:service}
+    SERVICE: ${self:service}-${sls:stage}
   environment:
     DEBUG: 'api.resources-dapp.betterfield:*'
     DEBUG_DEPTH: 5
@@ -25,12 +25,39 @@ provider:
     ACM_CERTIFICATE_ARN: ${env:ACM_CERTIFICATE_ARN}
     S3_BUCKET_NAME: ${self:custom.s3Bucket}
     STAGE: ${sls:stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:DeleteObject
+        - s3:PutObjectAcl
+        - s3:ListBucket # Needed for headObject
+      Resource:
+        - arn:aws:s3:::${self:custom.s3Bucket}  # Needed for headObject
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource:
+        - '*'
+
 
 functions:
   api:
     handler: index.handler
     events:
-      - httpApi: '*'
+      - http: 
+          method: any
+          path: /api/{proxy+}
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
 
 custom:
   s3Bucket: ${self:service}-${sls:stage}-bucket
@@ -39,10 +66,5 @@ custom:
     certificate: ${env:ACM_CERTIFICATE_ARN}
     compress: false
     cookies: none
-    headers:
-      - Authorization
-    querystring:
-      - q
-      - includeDisabled
     priceClass: PriceClass_100
     minimumProtocolVersion: TLSv1
