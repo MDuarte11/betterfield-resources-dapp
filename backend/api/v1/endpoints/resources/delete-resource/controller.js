@@ -21,6 +21,7 @@ async function handler(req, res) {
         resourceDeleted: resourceDeleted
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }

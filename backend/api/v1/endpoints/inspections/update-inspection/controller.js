@@ -43,6 +43,7 @@ async function handler(req, res) {
         inspectionUpdated: inspectionUpdated
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }

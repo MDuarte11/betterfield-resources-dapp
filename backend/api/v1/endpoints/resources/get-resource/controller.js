@@ -19,6 +19,7 @@ async function handler(req, res) {
         resource: resource
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }

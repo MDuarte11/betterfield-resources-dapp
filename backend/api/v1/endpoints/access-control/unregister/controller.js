@@ -21,6 +21,7 @@ async function handler(req, res) {
         unregistered: unregistered
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }

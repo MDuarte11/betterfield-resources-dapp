@@ -41,6 +41,7 @@ async function handler(req, res) {
         lastInspectionId
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }

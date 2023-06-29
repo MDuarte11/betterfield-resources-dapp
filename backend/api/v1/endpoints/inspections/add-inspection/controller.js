@@ -52,6 +52,7 @@ async function handler(req, res) {
         inspectionAdded: inspectionAdded
     })
   } catch (err) {
+    console.log(err)
     res.status(500).send()
   }
 }
