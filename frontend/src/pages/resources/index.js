@@ -96,8 +96,10 @@ export default function ResourcesPage() {
 
   const openResourceDetail = (row) => {
     const json = resources.resourcesRaw.find((resource) =>
-      JSON.parse(resource).id === row.id // TODO: Request API to retrieve all data for the details page
-    )
+      resource.id === row.id
+    ).resource
+    console.log(row)
+    console.log(json)
     navigate(`/dashboard/resource-detail/${row.id}`, {state:{resource: row, json}})
   };
 
@@ -202,7 +204,8 @@ export default function ResourcesPage() {
                 ) : (
                   <TableBody>
                     {tableResources && tableResources.map((row) => {
-                      const { id, name, type } = row;
+                      const { id, resource } = row;
+                      const { name, type } = resource;
                       return (
                         <TableRow hover key={id} tabIndex={-1} onClick={() => openResourceDetail(row)}>
                           <TableCell align="left">{id}</TableCell>

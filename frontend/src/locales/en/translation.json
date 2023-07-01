@@ -35,9 +35,11 @@
         "resource-detail": {
             "tab-title": "Resource detail | Betterfield ResourcesDApp",
             "page-title": "Resource detail",
-            "id-detail": "Resource ID:",
+            "id-detail-blockchain": "Resource ID (Blockchain):",
+            "id-detail-native-system": "Resource ID (Native system):",
             "name-detail": "Name:",
             "type-detail": "Type:",
+            "location-detail": "Location:",
             "json-title": "Full data"
         },
         "inspections": {

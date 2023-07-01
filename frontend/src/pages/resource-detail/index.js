@@ -31,7 +31,7 @@ export default function ResourceDetailPage() {
                 direction="row">
                 <Grid item>
                     <Typography variant="h6">
-                        {t('pages.resource-detail.id-detail')}
+                        {t('pages.resource-detail.id-detail-blockchain')}
                     </Typography>
                 </Grid>
                 <Grid item marginLeft={1} marginTop={0.5}>
@@ -45,12 +45,26 @@ export default function ResourceDetailPage() {
                 direction="row">
                 <Grid item>
                     <Typography variant="h6">
+                        {t('pages.resource-detail.id-detail-native-system')}
+                    </Typography>
+                </Grid>
+                <Grid item marginLeft={1} marginTop={0.5}>
+                    <Typography variant="body2">
+                        {state.resource.resource.id}
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid container
+                alignItems="flex-start"
+                direction="row">
+                <Grid item>
+                    <Typography variant="h6">
                         {t('pages.resource-detail.name-detail')}
                     </Typography>
                 </Grid>
                 <Grid item marginLeft={1} marginTop={0.5}>
                     <Typography variant="body2">
-                        {state.resource.name}
+                        {state.resource.resource.name}
                     </Typography>
                 </Grid>
             </Grid>
@@ -64,7 +78,21 @@ export default function ResourceDetailPage() {
                 </Grid>
                 <Grid item marginLeft={1} marginTop={0.5}>
                     <Typography variant="body2">
-                        {state.resource.type.name}
+                        {state.resource.resource.type.name}
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid container
+                alignItems="flex-start"
+                direction="row">
+                <Grid item>
+                    <Typography variant="h6">
+                        {t('pages.resource-detail.location-detail')}
+                    </Typography>
+                </Grid>
+                <Grid item marginLeft={1} marginTop={0.5}>
+                    <Typography variant="body2">
+                        {state.resource.resource.location}
                     </Typography>
                 </Grid>
             </Grid>
