@@ -5,6 +5,8 @@ plugins:
  - serverless-api-cloudfront
  - serverless-offline  # should be last in list
 
+useDotenv: true
+
 provider:
   name: aws
   runtime: nodejs18.x
