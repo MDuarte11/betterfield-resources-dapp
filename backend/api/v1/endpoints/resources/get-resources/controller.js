@@ -17,13 +17,18 @@ async function handler(req, res) {
     }
 
     // Parse valid Json entries. Skip invalid entries, to prevent data loss send raw data as well.
+    var reduceIndex = 0
     let decodedResources = resources[1].reduce((reducedResources, resource) => {
       try {
-        reducedResources.push(JSON.parse(resource))
+        reducedResources.push({
+          id: resources[0][reduceIndex],
+          resource: JSON.parse(resource)
+        })
       } catch (err) {
         console.log(err)
         // Ignore error
       }
+      reduceIndex++
       return reducedResources
     }, [])
 
@@ -35,7 +40,7 @@ async function handler(req, res) {
     res.json({
         resourceIds: resources[0],
         resources: decodedResources,
-        resourcesRaw: resources[1],
+        resourcesRaw: resources[1].map((resource, index) => {return {id: resources[0][index], resource}}),
         resourcesCount: resources[2].toNumber(),
         lastResourceId
     })
