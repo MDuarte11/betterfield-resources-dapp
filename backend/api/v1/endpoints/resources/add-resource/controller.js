@@ -7,10 +7,12 @@ const bodySchema = Joi.object({
     resource: Joi.object({
         id: Joi.number().integer().min(0).required(),
         name: Joi.string().min(0).required(),
+        location: Joi.string().optional(),
         type: Joi.object({
             id: Joi.number().integer().min(0).required(),
             name: Joi.string().min(0).required()
-        })
+        }),
+        additionalData: Joi.string().optional()
     })
 })
 
