@@ -62,6 +62,21 @@ function descendingComparator(a, b, orderBy) {
     return stabilizedThis.map((el) => el[0]);
   }
 
+  const formatJson = (obj, indent = 0) => {
+    const indentString = ' '.repeat(2); // Number of spaces for indentation
+  
+    const jsonString = JSON.stringify(obj, null, 2);
+    const formattedString = jsonString
+      .replace(/(\\?")/g, (match, p1) => (p1 === '\\"' ? '"' : p1)) // Replace escaped quotation marks with original quotation marks
+      .replace(/(\{|\}|\[|\]|,)/g, (match, p1) => `${p1}\n${indentString.repeat(indent + 1)}`) // Add indentation after opening/closing braces, brackets, and commas
+      .replace(/(".*?"):/g, (match, p1) => {
+        const processedKey = p1.replace(/"/g, ''); // Add space after the colon for key-value pairs
+        return `"${processedKey}": `;
+      });
+  
+    return formattedString;
+  };
+
 export default function InspectionDetailPage() {
     const { t } = useTranslation()
     const { state } = useLocation()
@@ -133,6 +148,7 @@ export default function InspectionDetailPage() {
                     { sequence: [0x47, 0x49, 0x46, 0x38, 0x37, 0x61], mimeType: 'image/gif' },
                     { sequence: [0x47, 0x49, 0x46, 0x38, 0x39, 0x61], mimeType: 'image/gif' },
                     { sequence: [0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x6D, 0x70, 0x34, 0x32], mimeType: 'video/mp4' },
+                    { sequence: [0x00, 0x00, 0x00], mimeType: 'video/mp4' },
                     { sequence: [0x1A, 0x45, 0xDF, 0xA3], mimeType: 'video/webm' },
                     { sequence: [0x49, 0x44, 0x33], mimeType: 'audio/mpeg' },
                     { sequence: [0x52, 0x49, 0x46, 0x46], mimeType: 'audio/wav' }
@@ -365,7 +381,9 @@ export default function InspectionDetailPage() {
                         borderColor: theme.palette.grey[500]
                     }}>
                         <Typography variant="body2">
-                            {state.json}
+                            <pre style={{ whiteSpace: 'pre-wrap' }}>
+                                {formatJson(state.json)}
+                            </pre>
                         </Typography>
                     </Box>
                 </Grid>
