@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 require("@nomiclabs/hardhat-ethers");
+require("hardhat-gas-reporter");
 var fs = require('fs');
 const util = require('util');
 var ethers = require('ethers')
@@ -298,4 +299,12 @@ module.exports = {
          accounts: [`0x${WALLET_PRIVATE_KEY}`]
       }
    },
+   gasReporter: {
+      enabled: (process.env.REPORT_GAS) ? true : false,
+      currency: 'EUR',
+      token: 'MATIC',
+      gasPriceApi: 'https://api.polygonscan.com/api?module=proxy&action=eth_gasPrice',
+      coinmarketcap: process.env.COIN_MARKET_API_KEY,
+      showTimeSpent: true
+    }
 }
