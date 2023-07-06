@@ -1,8 +1,11 @@
+require("dotenv").config();
+
 async function main() {
+    const { WALLET_ADDRESS } = process.env
     const BFAccessControl = await ethers.getContractFactory("BFAccessControl");
  
     // Start deployment, returning a promise that resolves to a contract object
-    const access_control = await BFAccessControl.deploy("0x92C5C193945EFD4bEd3fE46490792081E753Ef91");   
+    const access_control = await BFAccessControl.deploy(WALLET_ADDRESS);   
     console.log("Access Control contract deployed to address:", access_control.address);
 
     const BFWriteResource = await ethers.getContractFactory("BFWriteResource");
