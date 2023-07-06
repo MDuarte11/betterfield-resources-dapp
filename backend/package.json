@@ -39,6 +39,7 @@
     "web3.storage": "^4.5.4"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
     "hardhat-gas-reporter": "^1.0.9",
     "serverless-offline": "^12.0.4"
   }
