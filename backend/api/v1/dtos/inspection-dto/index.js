@@ -18,5 +18,7 @@
  *             items:
  *              type: object
  *                $ref: '#/components/schemas/InspectedItemDto'
+ *         additionalData:
+ *           type: string
  *           
  */

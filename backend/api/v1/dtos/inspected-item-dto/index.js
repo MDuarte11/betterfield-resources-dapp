@@ -20,5 +20,7 @@
  *              type: string
  *         mediaCID:
  *           type: string
+ *         additionalData:
+ *           type: string
  *           
  */

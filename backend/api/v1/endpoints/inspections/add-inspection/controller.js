@@ -12,10 +12,12 @@ const bodySchema = Joi.object({
         resource: Joi.object({
             id: Joi.number().integer().min(0).required(),
             name: Joi.string().min(0).required(),
+            location: Joi.string().optional(),
             type: Joi.object({
                 id: Joi.number().integer().min(0).required(),
                 name: Joi.string().min(0).required()
-            })
+            }),
+            additionalData: Joi.string().optional()
         }),
         conformity: Joi.string().min(0).required(),
         items: Joi.array().items(Joi.object({
@@ -23,8 +25,10 @@ const bodySchema = Joi.object({
             name: Joi.string().min(0).required(),
             conformity: Joi.string().min(0).required(),
             description: Joi.string().optional(),
-            mediaUrls: Joi.array().items(Joi.string()).optional()
-        }))
+            mediaUrls: Joi.array().items(Joi.string()).optional(),
+            additionalData: Joi.string().optional()
+        })),
+        additionalData: Joi.string().optional()
     })
 })
 
