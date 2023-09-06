@@ -13,7 +13,13 @@
         "home": {
             "tab-title": "Home | Betterfield ResourcesDApp",
             "page-title": "Bienvenue!",
-            "welcome-message": "Ce site Web a pour objectif de fournir un outil gratuit permettant à chacun de rechercher des ressources publiques stockées sur la Blockchain.\nVous pouvez vérifier si une route locale, un pont, un bâtiment public ou toute autre ressource publique est inspecté périodiquement et vérifier son état actuel.\nGardez à l'esprit que toutes les ressources ne sont pas stockées sur la Blockchain."
+            "welcome-message": "Ce site Web a pour objectif de fournir un outil gratuit permettant à chacun de rechercher des ressources publiques stockées sur la Blockchain.\nVous pouvez vérifier si une route locale, un pont, un bâtiment public ou toute autre ressource publique est inspecté périodiquement et vérifier son état actuel.\nGardez à l'esprit que toutes les ressources ne sont pas stockées sur la Blockchain.",
+            "addresses-title": "Adresses de Smart Contracts",
+            "addresses-message": {
+                "test": "Utilisez les adresses suivantes pour rechercher des données sur la Blockchain.\nRessources: 0x71250C26bD19f7627b47Cb95d8e4724A721B27B7\nInspections: 0xd7435Ee9AC22dE016Da0D476150ea601A9fDFAa7",
+                "qa": "Utilisez les adresses suivantes pour rechercher des données sur la Blockchain.\nRessources: Indisponível\nInspections: Indisponível",
+                "prod": "Utilisez les adresses suivantes pour rechercher des données sur la Blockchain.\nRessources: Indisponível\nInspections: Indisponível"
+            }
         },
         "resources": {
             "tab-title": "Ressources | Betterfield ResourcesDApp",

@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 // @mui
 import { Container, Typography } from '@mui/material';
 
+const { ENV } = process.env
+
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
@@ -21,6 +23,14 @@ export default function HomePage() {
 
         <Typography variant="body1" sx={{ mb: 5, whiteSpace: 'pre-line' }}>
           {t('pages.home.welcome-message')}
+        </Typography>
+
+        <Typography variant="h5" sx={{ mb: 5, whiteSpace: 'pre-line' }}>
+          {t('pages.home.addresses-title')}
+        </Typography>
+
+        <Typography variant="body1" sx={{ mb: 5, whiteSpace: 'pre-line' }}>
+          {t(`pages.home.addresses-message.${ENV}`)}
         </Typography>
       </Container>
     </>

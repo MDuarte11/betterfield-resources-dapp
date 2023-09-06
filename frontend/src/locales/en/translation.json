@@ -13,7 +13,13 @@
         "home": {
             "tab-title": "Home | Betterfield ResourcesDApp",
             "page-title": "Welcome!",
-            "welcome-message": "This website has the goal to provide a free tool for everyone to search for public resources stored on the Blockchain.\nYou can check if a local road, bridge, public building or any other public resource is being inspected periodically and verify it's current state.\nKeep in mind that not all resources are stored on the Blockchain."
+            "welcome-message": "This website has the goal to provide a free tool for everyone to search for public resources stored on the Blockchain.\nYou can check if a local road, bridge, public building or any other public resource is being inspected periodically and verify it's current state.\nKeep in mind that not all resources are stored on the Blockchain.",
+            "addresses-title": "Smart Contract Addresses",
+            "addresses-message": {
+                "test": "Use the following addresses to search for data on the Blockchain.\nResources: 0x71250C26bD19f7627b47Cb95d8e4724A721B27B7\nInspections: 0xd7435Ee9AC22dE016Da0D476150ea601A9fDFAa7",
+                "qa": "Use the following addresses to search for data on the Blockchain.\nResources: Indisponível\nInspections: Indisponível",
+                "prod": "Use the following addresses to search for data on the Blockchain.\nResources: Indisponível\nInspections: Indisponível"
+            }
         },
         "resources": {
             "tab-title": "Resources | Betterfield ResourcesDApp",
