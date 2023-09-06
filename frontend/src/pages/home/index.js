@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 // @mui
 import { Container, Typography } from '@mui/material';
 
-const { ENV } = process.env
+import config from '../../config'
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ export default function HomePage() {
         </Typography>
 
         <Typography variant="body1" sx={{ mb: 5, whiteSpace: 'pre-line' }}>
-          {t(`pages.home.addresses-message.${ENV}`)}
+          {t(`pages.home.addresses-message.${config.env}`)}
         </Typography>
       </Container>
     </>
